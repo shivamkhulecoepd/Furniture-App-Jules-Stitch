@@ -17,17 +17,50 @@ class OtpVerificationScreen extends StatelessWidget {
       appBar: const AppAppBar(showBackButton: true),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(AppSpacing.containerPadding),
+          padding: EdgeInsets.symmetric(horizontal: AppSpacing.containerPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Verification Code', style: AppTextStyles.headlineLg),
+              SizedBox(height: 24.h),
+              Text('Verification Code', style: AppTextStyles.headlineLg.copyWith(fontSize: 28.sp)),
               SizedBox(height: 8.h),
-              Text('Enter the code sent to your email.', style: AppTextStyles.bodyMd.copyWith(color: AppColors.onSurfaceVariant)),
-              SizedBox(height: 40.h),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: List.generate(4, (index) => _buildOtpBox())),
+              Text(
+                'We have sent a verification code to your email address.',
+                style: AppTextStyles.bodyMd,
+              ),
+              SizedBox(height: 48.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(4, (index) => _buildOtpBox()),
+              ),
+              SizedBox(height: 32.h),
+              Center(
+                child: TextButton(
+                  onPressed: () {},
+                  child: RichText(
+                    text: TextSpan(
+                      style: AppTextStyles.bodyMd.copyWith(color: AppColors.onSurface),
+                      children: [
+                        const TextSpan(text: "Didn't receive code? "),
+                        TextSpan(
+                          text: 'Resend',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w700,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               const Spacer(),
-              AppButton(text: 'Verify', onPressed: () => context.go(AppRouter.home)),
+              AppButton(
+                text: 'Verify',
+                onPressed: () => context.go(AppRouter.home),
+              ),
+              SizedBox(height: 24.h),
             ],
           ),
         ),
@@ -37,10 +70,25 @@ class OtpVerificationScreen extends StatelessWidget {
 
   Widget _buildOtpBox() {
     return Container(
-      width: 70.w,
-      height: 70.h,
-      decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(AppRadius.md)),
-      child: const Center(child: TextField(textAlign: TextAlign.center, keyboardType: TextInputType.number, decoration: InputDecoration(border: InputBorder.none))),
+      width: 76.w,
+      height: 76.h,
+      decoration: BoxDecoration(
+        color: AppColors.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(AppRadius.def),
+        border: Border.all(color: const Color(0xFFEEEEEE)),
+      ),
+      child: Center(
+        child: TextField(
+          textAlign: TextAlign.center,
+          keyboardType: TextInputType.number,
+          maxLength: 1,
+          style: AppTextStyles.headlineMd.copyWith(fontSize: 24.sp),
+          decoration: const InputDecoration(
+            counterText: '',
+            border: InputBorder.none,
+          ),
+        ),
+      ),
     );
   }
 }
