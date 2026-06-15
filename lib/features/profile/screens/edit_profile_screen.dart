@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../shared/widgets/app_app_bar.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_text_field.dart';
-import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../theme/app_colors.dart';
 

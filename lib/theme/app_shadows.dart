@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 
 class AppShadows {
   static List<BoxShadow> get soft => [
-    BoxShadow(
-      color: Colors.black.withOpacity(0.04),
+    const BoxShadow(
+      color: Color.fromRGBO(0, 0, 0, 0.04),
+      offset: Offset(0, 10),
       blurRadius: 30,
-      offset: const Offset(0, 10),
     ),
   ];
 
-  static List<BoxShadow> get cardBorder => [
-    BoxShadow(
-      color: const Color(0xFFEEEEEE).withOpacity(0.5),
-      blurRadius: 0,
-      spreadRadius: 1,
+  static List<BoxShadow> get bottomNav => [
+    const BoxShadow(
+      color: Color.fromRGBO(0, 0, 0, 0.04),
+      offset: Offset(0, -10),
+      blurRadius: 30,
     ),
-    ...soft,
   ];
 }

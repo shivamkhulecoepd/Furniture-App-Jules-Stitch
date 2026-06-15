@@ -15,7 +15,14 @@ class WelcomeScreen extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Container(color: Colors.black),
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage('https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=2864&auto=format&fit=crop'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ),
           Positioned.fill(
             child: DecoratedBox(
@@ -23,10 +30,10 @@ class WelcomeScreen extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  stops: const [0.3, 1.0],
+                  stops: const [0.2, 1.0],
                   colors: [
-                    Colors.black.withOpacity(0.0),
-                    Colors.black.withOpacity(0.85),
+                    Colors.black.withValues(alpha: 0.0),
+                    Colors.black.withValues(alpha: 0.9),
                   ],
                 ),
               ),
@@ -37,51 +44,77 @@ class WelcomeScreen extends StatelessWidget {
               builder: (context, constraints) {
                 return SingleChildScrollView(
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: AppSpacing.containerPadding, vertical: 24.h),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 200.h),
-                          Text(
-                            'Design Your Dream\nLiving Space',
-                            style: AppTextStyles.headlineXl.copyWith(
-                              color: Colors.white,
-                              fontSize: 36.sp,
-                              height: 1.1,
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: IntrinsicHeight(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w, vertical: 32.h),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Spacer(),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(100.r),
+                                border: Border.all(color: Colors.white24),
+                              ),
+                              child: Text(
+                                'ESTABLISHED 2024',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.2,
+                                ),
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 20.h),
-                          Text(
-                            'Discover premium furniture and decor that reflects your unique style and personality.',
-                            style: AppTextStyles.bodyLg.copyWith(
-                              color: Colors.white.withOpacity(0.85),
-                              height: 1.6,
+                            SizedBox(height: 24.h),
+                            Text(
+                              'Unique Furniture with\nGood Quality',
+                              textAlign: TextAlign.center,
+                              style: AppTextStyles.headlineXl.copyWith(
+                                color: Colors.white,
+                                fontSize: 34.sp,
+                                height: 1.1,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 48.h),
-                          AppButton(
-                            text: 'Get Started',
-                            onPressed: () => context.go(AppRouter.login),
-                          ),
-                          SizedBox(height: 24.h),
-                          Center(
-                            child: GestureDetector(
+                            SizedBox(height: 16.h),
+                            Text(
+                              'Discover the art of living with our curated collection of premium minimalist furniture.',
+                              textAlign: TextAlign.center,
+                              style: AppTextStyles.bodyMd.copyWith(
+                                color: Colors.white.withValues(alpha: 0.8),
+                                height: 1.6,
+                              ),
+                            ),
+                            SizedBox(height: 48.h),
+                            AppButton(
+                              text: 'Get started',
+                              icon: Icons.arrow_forward,
+                              onPressed: () => context.go(AppRouter.login),
+                            ),
+                            SizedBox(height: 24.h),
+                            GestureDetector(
                               onTap: () => context.go(AppRouter.login),
                               child: Text(
                                 'Already have an account? Login',
-                                style: AppTextStyles.bodyMd.copyWith(color: Colors.white),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.sp,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 );
-              }
+              },
             ),
           ),
         ],

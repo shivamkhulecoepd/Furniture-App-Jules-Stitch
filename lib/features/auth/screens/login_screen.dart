@@ -6,7 +6,6 @@ import '../../../shared/widgets/app_text_field.dart';
 import '../../../shared/widgets/app_app_bar.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
-import '../../../theme/app_colors.dart';
 import '../../../routes/app_router.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -15,90 +14,142 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppAppBar(showBackButton: true),
+      appBar: AppAppBar(
+        title: 'Modern Furniture',
+        actions: [
+          IconButton(
+            icon: Icon(Icons.shopping_bag_outlined, color: Colors.black, size: 24.sp),
+            onPressed: () {},
+          ),
+          SizedBox(width: 8.w),
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: AppSpacing.containerPadding),
+          padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 24.h),
-              Text('Welcome Back', style: AppTextStyles.headlineLg.copyWith(fontSize: 28.sp)),
-              SizedBox(height: 8.h),
-              Text(
-                'Please enter your details to sign in',
-                style: AppTextStyles.bodyMd,
-              ),
-              SizedBox(height: 48.h),
-              const AppTextField(
-                label: 'Email Address',
-                hintText: 'Enter your email',
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(height: 24.h),
-              AppTextField(
-                label: 'Password',
-                hintText: 'Enter your password',
-                obscureText: true,
-                suffixIcon: Icon(Icons.visibility_off_outlined, size: 20.sp, color: Colors.grey),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () => context.push(AppRouter.forgotPassword),
-                  child: Text(
-                    'Forgot Password?',
-                    style: AppTextStyles.labelMd.copyWith(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+              SizedBox(height: 16.h),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(32.r),
+                child: Image.network(
+                  'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=600',
+                  height: 200.h,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
               ),
               SizedBox(height: 32.h),
-              AppButton(
-                text: 'Login',
-                onPressed: () => context.go(AppRouter.home),
+              Text(
+                'Welcome Back',
+                style: AppTextStyles.h2.copyWith(fontSize: 32.sp),
               ),
-              SizedBox(height: 32.h),
-              Row(
+              SizedBox(height: 8.h),
+              Text(
+                'Access your curated collection',
+                style: AppTextStyles.bodyMd.copyWith(color: Colors.grey),
+              ),
+              SizedBox(height: 40.h),
+              const AppTextField(
+                label: 'EMAIL ADDRESS',
+                hint: 'name@example.com',
+                suffixIcon: Icon(Icons.mail_outline, color: Colors.grey, size: 20),
+              ),
+              SizedBox(height: 24.h),
+              Stack(
                 children: [
-                  const Expanded(child: Divider()),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: Text('OR', style: AppTextStyles.labelMd.copyWith(fontWeight: FontWeight.bold)),
+                  const AppTextField(
+                    label: 'PASSWORD',
+                    hint: 'Enter your password',
+                    obscureText: true,
+                    suffixIcon: Icon(Icons.visibility_off_outlined, color: Colors.grey, size: 20),
                   ),
-                  const Expanded(child: Divider()),
-                ],
-              ),
-              SizedBox(height: 32.h),
-              AppButton(
-                text: 'Continue with Google',
-                variant: AppButtonVariant.outline,
-                icon: Icons.g_mobiledata,
-                onPressed: () {},
-              ),
-              SizedBox(height: 48.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Don't have an account? ", style: AppTextStyles.bodyMd),
-                  GestureDetector(
-                    onTap: () => context.push(AppRouter.register),
-                    child: Text(
-                      'Sign Up',
-                      style: AppTextStyles.bodyMd.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w700,
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: GestureDetector(
+                      onTap: () => context.push(AppRouter.forgotPassword),
+                      child: Text(
+                        'Forgot Password?',
+                        style: AppTextStyles.labelSm.copyWith(color: Colors.black),
                       ),
                     ),
                   ),
                 ],
               ),
+              SizedBox(height: 40.h),
+              AppButton(
+                text: 'Login',
+                onPressed: () => context.go(AppRouter.catalog),
+              ),
               SizedBox(height: 24.h),
+              _buildDivider(),
+              SizedBox(height: 24.h),
+              _buildSocialButton(),
+              SizedBox(height: 32.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have an account? ", style: AppTextStyles.bodySm),
+                  GestureDetector(
+                    onTap: () => context.push(AppRouter.register),
+                    child: Text(
+                      'Register',
+                      style: AppTextStyles.labelSm.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 48.h),
+              Text(
+                '© 2024 Modern Furniture Inc. All rights reserved.',
+                style: AppTextStyles.labelSm.copyWith(color: Colors.grey[400], fontSize: 10.sp),
+              ),
+              SizedBox(height: 16.h),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildDivider() {
+    return Row(
+      children: [
+        const Expanded(child: Divider()),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Text('OR', style: AppTextStyles.labelSm.copyWith(color: Colors.grey)),
+        ),
+        const Expanded(child: Divider()),
+      ],
+    );
+  }
+
+  Widget _buildSocialButton() {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 16.h),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF4F3F8),
+        borderRadius: BorderRadius.circular(32.r),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'GOOGLE ',
+            style: TextStyle(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w300,
+              letterSpacing: 2,
+            ),
+          ),
+          Text(
+            'Continue with Google',
+            style: AppTextStyles.labelMd.copyWith(color: Colors.black),
+          ),
+        ],
       ),
     );
   }

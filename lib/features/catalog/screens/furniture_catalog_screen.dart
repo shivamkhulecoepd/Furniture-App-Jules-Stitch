@@ -5,6 +5,7 @@ import '../../../shared/widgets/app_app_bar.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../theme/app_colors.dart';
+import '../../../theme/app_shadows.dart';
 import '../../../models/product.dart';
 import '../widgets/product_card.dart';
 import '../../../routes/app_router.dart';
@@ -15,36 +16,35 @@ class FurnitureCatalogScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppAppBar(
         showBackButton: false,
-        leading: Icon(Icons.grid_view_rounded, color: AppColors.primary, size: 24.sp),
-        title: 'Elevate',
+        title: 'Modern Furniture',
+        subtitle: 'for your house',
         actions: [
           IconButton(
-            icon: Icon(Icons.notifications_none_rounded, color: AppColors.primary, size: 24.sp),
-            onPressed: () => context.push(AppRouter.notifications),
-          ),
-          IconButton(
-            icon: Icon(Icons.shopping_bag_outlined, color: AppColors.primary, size: 24.sp),
+            icon: Icon(Icons.shopping_bag_outlined, color: Colors.black, size: 24.sp),
             onPressed: () => context.push(AppRouter.cart),
           ),
           SizedBox(width: 8.w),
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: AppSpacing.containerPadding),
+        padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 16.h),
+            SizedBox(height: 24.h),
             _buildSearchBar(context),
             SizedBox(height: 32.h),
             _buildCategories(),
             SizedBox(height: 32.h),
-            _buildSectionHeader('New Arrivals', () {}),
-            SizedBox(height: 16.h),
             _buildProductGrid(context),
-            SizedBox(height: 48.h),
+            SizedBox(height: 32.h),
+            Text('Featured Deals', style: AppTextStyles.h3),
+            SizedBox(height: 16.h),
+            _buildFeaturedBanner(),
+            SizedBox(height: 100.h),
           ],
         ),
       ),
@@ -53,34 +53,45 @@ class FurnitureCatalogScreen extends StatelessWidget {
   }
 
   Widget _buildSearchBar(BuildContext context) {
-    return GestureDetector(
-      onTap: () => context.push(AppRouter.search),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
-        decoration: BoxDecoration(
-          color: AppColors.surfaceContainerLow,
-          borderRadius: BorderRadius.circular(AppRadius.def),
-        ),
-        child: Row(
-          children: [
-            Icon(Icons.search_rounded, color: Colors.grey, size: 22.sp),
-            SizedBox(width: 12.w),
-            Text(
-              'Search furniture...',
-              style: AppTextStyles.bodyMd.copyWith(color: Colors.grey),
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            decoration: BoxDecoration(
+              color: AppColors.surfaceContainerLow,
+              borderRadius: BorderRadius.circular(16.r),
             ),
-            const Spacer(),
-            Icon(Icons.tune_rounded, color: AppColors.primary, size: 22.sp),
-          ],
+            child: Row(
+              children: [
+                Icon(Icons.search, color: Colors.grey, size: 20.sp),
+                SizedBox(width: 12.w),
+                Text('Search furniture...', style: AppTextStyles.bodyMd.copyWith(color: Colors.grey)),
+              ],
+            ),
+          ),
         ),
-      ),
+        SizedBox(width: 12.w),
+        Container(
+          padding: EdgeInsets.all(12.w),
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          child: Icon(Icons.tune, color: Colors.white, size: 20.sp),
+        ),
+      ],
     );
   }
 
   Widget _buildCategories() {
-    final categories = ['All', 'Chairs', 'Sofas', 'Tables', 'Beds', 'Lamps'];
+    final categories = [
+      {'name': 'All', 'icon': null},
+      {'name': 'Chairs', 'icon': Icons.chair_outlined},
+      {'name': 'Sofas', 'icon': Icons.weekend_outlined},
+    ];
     return SizedBox(
-      height: 44.h,
+      height: 48.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
@@ -88,20 +99,28 @@ class FurnitureCatalogScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final isSelected = index == 0;
           return Container(
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             decoration: BoxDecoration(
-              color: isSelected ? AppColors.primary : Colors.white,
-              borderRadius: BorderRadius.circular(AppRadius.full),
-              border: isSelected ? null : Border.all(color: const Color(0xFFEEEEEE)),
+              color: isSelected ? Colors.black : AppColors.surfaceContainerLow,
+              borderRadius: BorderRadius.circular(32.r),
             ),
-            child: Center(
-              child: Text(
-                categories[index],
-                style: AppTextStyles.labelMd.copyWith(
-                  color: isSelected ? Colors.white : AppColors.onSurface,
-                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+            child: Row(
+              children: [
+                if (categories[index]['icon'] != null) ...[
+                  Icon(
+                    categories[index]['icon'] as IconData,
+                    color: Colors.grey,
+                    size: 18.sp,
+                  ),
+                  SizedBox(width: 8.w),
+                ],
+                Text(
+                  categories[index]['name'] as String,
+                  style: AppTextStyles.labelMd.copyWith(
+                    color: isSelected ? Colors.white : Colors.black,
+                  ),
                 ),
-              ),
+              ],
             ),
           );
         },
@@ -109,58 +128,39 @@ class FurnitureCatalogScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader(String title, VoidCallback onSeeAll) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(title, style: AppTextStyles.headlineMd.copyWith(fontSize: 22.sp)),
-        TextButton(
-          onPressed: onSeeAll,
-          child: Text(
-            'See All',
-            style: AppTextStyles.labelMd.copyWith(
-              color: AppColors.primary,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildProductGrid(BuildContext context) {
     final products = [
       const Product(
         id: '1',
-        name: 'Sabra Chair',
-        description: 'Modern minimalist chair',
-        price: 240.0,
-        imageUrl: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=2864&auto=format&fit=crop',
+        name: 'Minimal Chair',
+        description: 'Oak & Cotton',
+        price: 110.0,
+        imageUrl: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400',
         category: 'Chairs',
       ),
       const Product(
         id: '2',
-        name: 'Velvet Sofa',
-        description: 'Luxury comfort',
-        price: 850.0,
-        imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=3870&auto=format&fit=crop',
+        name: 'Sofa in Unique Style',
+        description: 'Velvet Navy',
+        price: 599.0,
+        imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
         category: 'Sofas',
       ),
       const Product(
         id: '3',
-        name: 'Wooden Table',
-        description: 'Handcrafted oak',
-        price: 420.0,
-        imageUrl: 'https://images.unsplash.com/photo-1530018607912-eff2df114f11?q=80&w=3870&auto=format&fit=crop',
-        category: 'Tables',
+        name: 'Modern Armchair',
+        description: 'Charcoal Wool',
+        price: 320.0,
+        imageUrl: 'https://images.unsplash.com/photo-1530018607912-eff2df114f11?w=400',
+        category: 'Chairs',
       ),
       const Product(
         id: '4',
-        name: 'Minimal Lamp',
-        description: 'Soft lighting',
-        price: 85.0,
-        imageUrl: 'https://images.unsplash.com/photo-1507473885765-e6ed657f89ad?q=80&w=3870&auto=format&fit=crop',
-        category: 'Lamps',
+        name: 'Marble Table',
+        description: 'Italian Marble',
+        price: 250.0,
+        imageUrl: 'https://images.unsplash.com/photo-1507473885765-e6ed657f89ad?w=400',
+        category: 'Tables',
       ),
     ];
 
@@ -170,9 +170,9 @@ class FurnitureCatalogScreen extends StatelessWidget {
       itemCount: products.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.68,
+        childAspectRatio: 0.65,
         crossAxisSpacing: 16.w,
-        mainAxisSpacing: 24.h,
+        mainAxisSpacing: 16.h,
       ),
       itemBuilder: (context, index) {
         return ProductCard(
@@ -183,21 +183,87 @@ class FurnitureCatalogScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildFeaturedBanner() {
+    return Container(
+      width: double.infinity,
+      height: 180.h,
+      decoration: BoxDecoration(
+        color: const Color(0xFF2F3034),
+        borderRadius: BorderRadius.circular(32.r),
+      ),
+      child: Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(24.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(100.r),
+                  ),
+                  child: Text(
+                    'NEW ARRIVAL',
+                    style: TextStyle(color: Colors.white, fontSize: 8.sp, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(height: 12.h),
+                Text(
+                  'Sabra Chair 581n',
+                  style: AppTextStyles.h3.copyWith(color: Colors.white),
+                ),
+                Text(
+                  'Limited edition collection',
+                  style: AppTextStyles.bodySm.copyWith(color: Colors.white70),
+                ),
+                SizedBox(height: 16.h),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(100.r),
+                  ),
+                  child: Text(
+                    'View Shop',
+                    style: AppTextStyles.labelSm.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            right: -20,
+            bottom: -20,
+            child: Image.network(
+              'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400',
+              height: 160.h,
+              fit: BoxFit.contain,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildBottomNav(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 24.w),
+      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 24.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(top: BorderSide(color: const Color(0xFFEEEEEE), width: 1)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(32.r)),
+        boxShadow: AppShadows.bottomNav,
       ),
       child: SafeArea(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildNavItem(Icons.home_rounded, true, () {}),
-            _buildNavItem(Icons.favorite_outline_rounded, false, () => context.push(AppRouter.cart)),
-            _buildNavItem(Icons.shopping_bag_outlined, false, () => context.push(AppRouter.cart)),
-            _buildNavItem(Icons.person_outline_rounded, false, () => context.push(AppRouter.profile)),
+            _buildNavItem(Icons.home_filled, true, () {}),
+            _buildNavItem(Icons.favorite_outline, false, () {}),
+            _buildNavItem(Icons.notifications_none, false, () => context.push(AppRouter.notifications)),
+            _buildNavItem(Icons.person_outline, false, () => context.push(AppRouter.profile)),
           ],
         ),
       ),
@@ -207,23 +273,16 @@ class FurnitureCatalogScreen extends StatelessWidget {
   Widget _buildNavItem(IconData icon, bool isSelected, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: isSelected ? AppColors.primary : AppColors.onSurfaceVariant.withOpacity(0.5),
-            size: 26.sp,
-          ),
-          if (isSelected) ...[
-            SizedBox(height: 6.h),
-            Container(
-              width: 5.w,
-              height: 5.w,
-              decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
-            ),
-          ],
-        ],
+      child: Container(
+        padding: EdgeInsets.all(12.w),
+        decoration: isSelected
+            ? const BoxDecoration(color: Colors.black, shape: BoxShape.circle)
+            : null,
+        child: Icon(
+          icon,
+          color: isSelected ? Colors.white : Colors.grey,
+          size: 24.sp,
+        ),
       ),
     );
   }

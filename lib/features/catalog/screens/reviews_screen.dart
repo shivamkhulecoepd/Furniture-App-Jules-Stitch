@@ -67,7 +67,7 @@ class ReviewsScreen extends StatelessWidget {
                   onPressed: () {},
                   style: OutlinedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 12.h),
-                    side: BorderSide(color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight),
+                    side: BorderSide(color: isDark ? AppColors.surfaceDark : AppColors.outlineVariant),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.r)),
                   ),
                   child: Text(

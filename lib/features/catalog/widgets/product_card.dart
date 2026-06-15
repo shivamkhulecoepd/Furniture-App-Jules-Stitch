@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../../models/product.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
-import '../../../theme/app_spacing.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -27,12 +26,13 @@ class ProductCard extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
+                  width: double.infinity,
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceContainerLow,
-                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    color: AppColors.surfaceContainer,
+                    borderRadius: BorderRadius.circular(32.r),
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderRadius: BorderRadius.circular(32.r),
                     child: CachedNetworkImage(
                       imageUrl: product.imageUrl,
                       fit: BoxFit.cover,
@@ -46,14 +46,14 @@ class ProductCard extends StatelessWidget {
                   right: 12.w,
                   child: Container(
                     padding: EdgeInsets.all(8.w),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.8),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       Icons.favorite_border_rounded,
                       size: 18.sp,
-                      color: AppColors.primary,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -61,18 +61,45 @@ class ProductCard extends StatelessWidget {
             ),
           ),
           SizedBox(height: 12.h),
-          Text(
-            product.name,
-            style: AppTextStyles.bodyLg.copyWith(fontWeight: FontWeight.w700),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            '\$${product.price.toStringAsFixed(2)}',
-            style: AppTextStyles.bodyMd.copyWith(
-              color: AppColors.onSurfaceVariant,
-              fontWeight: FontWeight.w600,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 4.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  product.name,
+                  style: AppTextStyles.labelLg,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  product.description,
+                  style: AppTextStyles.labelSm.copyWith(color: Colors.grey),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 8.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '\$${product.price.toStringAsFixed(2)}',
+                      style: AppTextStyles.labelLg.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF4F3F8),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: Text(
+                        '4.8 ★',
+                        style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],

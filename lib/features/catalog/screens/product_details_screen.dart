@@ -26,15 +26,15 @@ class ProductDetailsScreen extends StatelessWidget {
         leading: Padding(
           padding: EdgeInsets.only(left: 16.w),
           child: CircleAvatar(
-            backgroundColor: Colors.white,
-            child: BackButton(color: Colors.black),
+            backgroundColor: Colors.white.withValues(alpha: 0.8),
+            child: BackButton(color: Colors.black, onPressed: () => context.pop()),
           ),
         ),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 16.w),
             child: CircleAvatar(
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.white.withValues(alpha: 0.8),
               child: IconButton(
                 icon: const Icon(Icons.favorite_border_rounded, color: Colors.black),
                 onPressed: () {},
@@ -61,12 +61,12 @@ class ProductDetailsScreen extends StatelessWidget {
                         children: [
                           Text('Sabra Chair', style: AppTextStyles.h2),
                           SizedBox(height: 4.h),
-                          Text('Chairs', style: AppTextStyles.bodyMd.copyWith(color: Colors.grey)),
+                          Text('Modern Minimalist', style: AppTextStyles.bodyMd.copyWith(color: Colors.grey)),
                         ],
                       ),
                       Text(
                         '\$240.00',
-                        style: AppTextStyles.h2.copyWith(color: isDark ? Colors.white : Colors.black),
+                        style: AppTextStyles.h2.copyWith(color: Colors.black),
                       ),
                     ],
                   ),
@@ -77,7 +77,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   SizedBox(height: 12.h),
                   Text(
                     'The Sabra Chair features a minimalist silhouette with ergonomic support. Crafted with premium materials to ensure both style and durability for your living space.',
-                    style: AppTextStyles.bodyMd.copyWith(height: 1.6, color: isDark ? Colors.white70 : Colors.black87),
+                    style: AppTextStyles.bodyMd.copyWith(height: 1.6, color: Colors.black87),
                   ),
                   SizedBox(height: 32.h),
                   _buildColorSelector(isDark),
@@ -97,16 +97,16 @@ class ProductDetailsScreen extends StatelessWidget {
       height: 480.h,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+        color: AppColors.surfaceContainer,
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(AppRadius.xl),
-          bottomRight: Radius.circular(AppRadius.xl),
+          bottomLeft: Radius.circular(48.r),
+          bottomRight: Radius.circular(48.r),
         ),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(AppRadius.xl),
-          bottomRight: Radius.circular(AppRadius.xl),
+          bottomLeft: Radius.circular(48.r),
+          bottomRight: Radius.circular(48.r),
         ),
         child: CachedNetworkImage(
           imageUrl: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=2864&auto=format&fit=crop',
@@ -122,14 +122,14 @@ class ProductDetailsScreen extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
           decoration: BoxDecoration(
-            color: Colors.grey[100],
+            color: const Color(0xFFF4F3F8),
             borderRadius: BorderRadius.circular(20.r),
           ),
           child: Row(
             children: [
               Icon(Icons.star_rounded, color: Colors.amber, size: 18.sp),
               SizedBox(width: 4.w),
-              Text('4.8', style: AppTextStyles.labelSm.copyWith(fontWeight: FontWeight.bold)),
+              Text('4.8', style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold)),
             ],
           ),
         ),
@@ -166,7 +166,7 @@ class ProductDetailsScreen extends StatelessWidget {
               padding: EdgeInsets.all(3.w),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: isSelected ? Border.all(color: isDark ? Colors.white : Colors.black, width: 2) : null,
+                border: isSelected ? Border.all(color: Colors.black, width: 2) : null,
               ),
               child: CircleAvatar(
                 radius: 14.r,
@@ -183,10 +183,11 @@ class ProductDetailsScreen extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AppSpacing.lg.w),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.cardDark : Colors.white,
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(32.r)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 20,
             offset: const Offset(0, -5),
           ),
@@ -203,11 +204,11 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Icon(Icons.remove_rounded, size: 22.sp, color: isDark ? Colors.white : Colors.black),
+                  Icon(Icons.remove_rounded, size: 22.sp, color: Colors.black),
                   SizedBox(width: 16.w),
-                  Text('1', style: AppTextStyles.labelLg.copyWith(color: isDark ? Colors.white : Colors.black)),
+                  Text('1', style: AppTextStyles.labelLg.copyWith(color: Colors.black)),
                   SizedBox(width: 16.w),
-                  Icon(Icons.add_rounded, size: 22.sp, color: isDark ? Colors.white : Colors.black),
+                  Icon(Icons.add_rounded, size: 22.sp, color: Colors.black),
                 ],
               ),
             ),

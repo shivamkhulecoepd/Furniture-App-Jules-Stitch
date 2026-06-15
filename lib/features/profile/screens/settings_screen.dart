@@ -62,7 +62,7 @@ class SettingsScreen extends StatelessWidget {
       trailing: Switch.adaptive(
         value: value,
         onChanged: (v) {},
-        activeColor: Colors.black,
+        activeTrackColor: Colors.black,
       ),
     );
   }
