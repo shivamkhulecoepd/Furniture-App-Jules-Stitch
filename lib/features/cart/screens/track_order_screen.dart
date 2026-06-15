@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../shared/widgets/app_app_bar.dart';
 import '../../../theme/app_spacing.dart';
-import '../../../theme/app_colors.dart';
+import '../../../theme/app_colors.dart' hide AppSpacing;
 
 class TrackOrderScreen extends StatelessWidget {
   const TrackOrderScreen({super.key});

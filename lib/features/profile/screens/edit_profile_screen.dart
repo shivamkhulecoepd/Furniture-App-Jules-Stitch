@@ -5,7 +5,7 @@ import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_text_field.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
-import '../../../theme/app_colors.dart';
+import '../../../theme/app_colors.dart' hide AppSpacing;
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});

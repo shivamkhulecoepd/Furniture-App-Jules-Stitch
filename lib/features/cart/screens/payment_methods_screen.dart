@@ -5,7 +5,7 @@ import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_card.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
-import '../../../theme/app_colors.dart';
+import '../../../theme/app_colors.dart' hide AppSpacing;
 
 class PaymentMethodsScreen extends StatelessWidget {
   const PaymentMethodsScreen({super.key});

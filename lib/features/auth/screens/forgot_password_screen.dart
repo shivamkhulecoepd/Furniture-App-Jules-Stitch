@@ -6,7 +6,7 @@ import '../../../shared/widgets/app_text_field.dart';
 import '../../../shared/widgets/app_app_bar.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
-import '../../../theme/app_colors.dart';
+import '../../../theme/app_colors.dart' hide AppSpacing;
 import '../../../routes/app_router.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {

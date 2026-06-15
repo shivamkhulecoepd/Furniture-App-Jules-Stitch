@@ -19,4 +19,7 @@ class AppColors {
   // Missing dark mode tokens
   static const Color backgroundDark = Color(0xFF1A1B1F);
   static const Color onSurfaceDark = Color(0xFFF1F0F5);
+
+  // Additional custom colors
+  static const Color success = Color(0xFF4CAF50);
 }
