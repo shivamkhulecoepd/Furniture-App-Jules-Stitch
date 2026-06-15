@@ -7,7 +7,6 @@ import '../../../shared/widgets/app_loader.dart';
 import '../../../shared/widgets/app_error_state.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
-import '../../../theme/app_colors.dart';
 import '../controllers/product_controller.dart';
 import '../../cart/controllers/cart_controller.dart';
 

@@ -20,7 +20,7 @@ class WelcomeScreen extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.transparent, Colors.black.withOpacity(0.8)],
+                colors: [Colors.transparent, Colors.black.withValues(alpha: 0.8)],
               ),
             ),
           ),
@@ -35,7 +35,7 @@ class WelcomeScreen extends StatelessWidget {
                     SizedBox(height: 300.h),
                     Text('Design Your Dream\nLiving Space', style: AppTextStyles.headlineXl.copyWith(color: Colors.white)),
                     SizedBox(height: 16.h),
-                    Text('Discover premium furniture and decor that reflects your unique style.', style: AppTextStyles.bodyLg.copyWith(color: Colors.white.withOpacity(0.8))),
+                    Text('Discover premium furniture and decor that reflects your unique style.', style: AppTextStyles.bodyLg.copyWith(color: Colors.white.withValues(alpha: 0.8))),
                     SizedBox(height: 48.h),
                     AppButton(text: 'Get Started', onPressed: () => context.go(AppRouter.login)),
                     SizedBox(height: 16.h),
