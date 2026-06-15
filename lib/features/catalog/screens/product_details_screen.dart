@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
-import '../../../theme/app_colors.dart' hide AppSpacing;
+import '../../../theme/app_colors.dart';
 import '../../../routes/app_router.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
@@ -15,7 +15,10 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -24,7 +27,7 @@ class ProductDetailsScreen extends StatelessWidget {
           padding: EdgeInsets.only(left: 16.w),
           child: CircleAvatar(
             backgroundColor: Colors.white,
-            child: BackButton(color: AppColors.primary),
+            child: BackButton(color: Colors.black),
           ),
         ),
         actions: [
@@ -33,7 +36,7 @@ class ProductDetailsScreen extends StatelessWidget {
             child: CircleAvatar(
               backgroundColor: Colors.white,
               child: IconButton(
-                icon: const Icon(Icons.favorite_border_rounded, color: AppColors.primary),
+                icon: const Icon(Icons.favorite_border_rounded, color: Colors.black),
                 onPressed: () {},
               ),
             ),
@@ -46,7 +49,7 @@ class ProductDetailsScreen extends StatelessWidget {
           children: [
             _buildHeroImage(),
             Padding(
-              padding: EdgeInsets.all(AppSpacing.containerPadding),
+              padding: EdgeInsets.all(AppSpacing.lg.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -56,39 +59,36 @@ class ProductDetailsScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Sabra Chair', style: AppTextStyles.headlineLg.copyWith(fontSize: 26.sp)),
+                          Text('Sabra Chair', style: AppTextStyles.h2),
                           SizedBox(height: 4.h),
-                          Text('Chairs', style: AppTextStyles.bodyMd),
+                          Text('Chairs', style: AppTextStyles.bodyMd.copyWith(color: Colors.grey)),
                         ],
                       ),
                       Text(
                         '\$240.00',
-                        style: AppTextStyles.headlineMd.copyWith(
-                          color: AppColors.primary,
-                          fontSize: 24.sp,
-                        ),
+                        style: AppTextStyles.h2.copyWith(color: isDark ? Colors.white : Colors.black),
                       ),
                     ],
                   ),
                   SizedBox(height: 24.h),
-                  _buildRatingRow(),
+                  _buildRatingRow(context),
                   SizedBox(height: 32.h),
-                  Text('Description', style: AppTextStyles.headlineSmall.copyWith(fontSize: 18.sp)),
+                  Text('Description', style: AppTextStyles.h4),
                   SizedBox(height: 12.h),
                   Text(
                     'The Sabra Chair features a minimalist silhouette with ergonomic support. Crafted with premium materials to ensure both style and durability for your living space.',
-                    style: AppTextStyles.bodyMd.copyWith(height: 1.6),
+                    style: AppTextStyles.bodyMd.copyWith(height: 1.6, color: isDark ? Colors.white70 : Colors.black87),
                   ),
                   SizedBox(height: 32.h),
-                  _buildColorSelector(),
-                  SizedBox(height: 100.h),
+                  _buildColorSelector(isDark),
+                  SizedBox(height: 120.h),
                 ],
               ),
             ),
           ],
         ),
       ),
-      bottomSheet: _buildBottomBar(context),
+      bottomSheet: _buildBottomBar(context, isDark),
     );
   }
 
@@ -116,44 +116,47 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRatingRow() {
+  Widget _buildRatingRow(BuildContext context) {
     return Row(
       children: [
         Container(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainer,
-            borderRadius: BorderRadius.circular(AppRadius.full),
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(20.r),
           ),
           child: Row(
             children: [
               Icon(Icons.star_rounded, color: Colors.amber, size: 18.sp),
               SizedBox(width: 4.w),
-              Text('4.8', style: AppTextStyles.labelMd.copyWith(fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+              Text('4.8', style: AppTextStyles.labelSm.copyWith(fontWeight: FontWeight.bold)),
             ],
           ),
         ),
         SizedBox(width: 12.w),
-        Text('(128 Reviews)', style: AppTextStyles.labelMd),
+        Text('(128 Reviews)', style: AppTextStyles.bodySm.copyWith(color: Colors.grey)),
         const Spacer(),
-        Text(
-          'Read All',
-          style: AppTextStyles.labelMd.copyWith(
-            color: AppColors.primary,
-            fontWeight: FontWeight.w700,
-            decoration: TextDecoration.underline,
+        GestureDetector(
+          onTap: () => context.push(AppRouter.reviews),
+          child: Text(
+            'Read All',
+            style: AppTextStyles.labelSm.copyWith(
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+              decoration: TextDecoration.underline,
+            ),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildColorSelector() {
-    final colors = [AppColors.primary, Colors.brown[300]!, Colors.blueGrey[200]!];
+  Widget _buildColorSelector(bool isDark) {
+    final colors = [Colors.black, Colors.brown[300]!, Colors.blueGrey[200]!];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Available Colors', style: AppTextStyles.headlineSmall.copyWith(fontSize: 18.sp)),
+        Text('Available Colors', style: AppTextStyles.h4),
         SizedBox(height: 16.h),
         Row(
           children: List.generate(colors.length, (index) {
@@ -163,7 +166,7 @@ class ProductDetailsScreen extends StatelessWidget {
               padding: EdgeInsets.all(3.w),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: isSelected ? Border.all(color: AppColors.primary, width: 2) : null,
+                border: isSelected ? Border.all(color: isDark ? Colors.white : Colors.black, width: 2) : null,
               ),
               child: CircleAvatar(
                 radius: 14.r,
@@ -176,11 +179,11 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomBar(BuildContext context) {
+  Widget _buildBottomBar(BuildContext context, bool isDark) {
     return Container(
-      padding: EdgeInsets.all(AppSpacing.containerPadding),
+      padding: EdgeInsets.all(AppSpacing.lg.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? AppColors.cardDark : Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -195,16 +198,16 @@ class ProductDetailsScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xFFEEEEEE)),
-                borderRadius: BorderRadius.circular(AppRadius.def),
+                border: Border.all(color: Colors.grey[200]!),
+                borderRadius: BorderRadius.circular(16.r),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.remove_rounded, size: 22.sp),
+                  Icon(Icons.remove_rounded, size: 22.sp, color: isDark ? Colors.white : Colors.black),
                   SizedBox(width: 16.w),
-                  Text('1', style: AppTextStyles.bodyLg.copyWith(fontWeight: FontWeight.w700)),
+                  Text('1', style: AppTextStyles.labelLg.copyWith(color: isDark ? Colors.white : Colors.black)),
                   SizedBox(width: 16.w),
-                  Icon(Icons.add_rounded, size: 22.sp),
+                  Icon(Icons.add_rounded, size: 22.sp, color: isDark ? Colors.white : Colors.black),
                 ],
               ),
             ),

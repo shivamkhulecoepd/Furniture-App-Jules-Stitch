@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:furniture_app_jules_stitch/theme/app_text_styles.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/app_app_bar.dart';
 import '../../../shared/widgets/app_button.dart';
+import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
-import '../../../theme/app_colors.dart' hide AppSpacing;
+import '../../../theme/app_colors.dart';
+import '../../../theme/app_shadows.dart';
 import '../../../routes/app_router.dart';
 
 class CartScreen extends StatelessWidget {
@@ -13,129 +14,157 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      appBar: const AppAppBar(title: 'My Cart'),
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      appBar: AppAppBar(
+        title: 'Wish List',
+        actions: [
+          IconButton(
+            icon: Icon(Icons.shopping_bag_outlined, color: isDark ? Colors.white : Colors.black),
+            onPressed: () {},
+          ),
+          SizedBox(width: 8.w),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(
-            child: ListView.separated(
-              padding: EdgeInsets.all(AppSpacing.containerPadding),
-              itemCount: 2,
-              separatorBuilder: (context, index) => SizedBox(height: 24.h),
-              itemBuilder: (context, index) => _buildCartItem(),
+            child: ListView(
+              padding: EdgeInsets.all(AppSpacing.lg.w),
+              children: [
+                _buildCartItem(
+                  isDark,
+                  name: 'Minimal Chair',
+                  color: 'Dark Gray Color',
+                  price: 110.0,
+                  imageUrl: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=200',
+                  quantity: 1,
+                ),
+                SizedBox(height: 16.h),
+                _buildCartItem(
+                  isDark,
+                  name: 'Sleepover Arm',
+                  color: 'Navy Blue',
+                  price: 160.0,
+                  imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=200',
+                  quantity: 1,
+                ),
+                SizedBox(height: 16.h),
+                _buildCartItem(
+                  isDark,
+                  name: 'Boogy Wool',
+                  color: 'Cream White',
+                  price: 220.5,
+                  imageUrl: 'https://images.unsplash.com/photo-1530018607912-eff2df114f11?w=200',
+                  quantity: 2,
+                ),
+                SizedBox(height: 32.h),
+                _buildOrderInfo(isDark),
+              ],
             ),
           ),
-          _buildSummary(context),
+          SizedBox(height: 16.h),
         ],
       ),
     );
   }
 
-  Widget _buildCartItem() {
-    return Row(
-      children: [
-        Container(
-          width: 100.w,
-          height: 100.w,
-          decoration: BoxDecoration(
-            color: AppColors.surfaceContainerLow,
-            borderRadius: BorderRadius.circular(AppRadius.md),
-            image: const DecorationImage(
-              image: NetworkImage('https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=2864&auto=format&fit=crop'),
-              fit: BoxFit.cover,
+  Widget _buildCartItem(
+    bool isDark, {
+    required String name,
+    required String color,
+    required double price,
+    required String imageUrl,
+    required int quantity,
+  }) {
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.cardDark : AppColors.cardLight,
+        borderRadius: BorderRadius.circular(24.r),
+        boxShadow: AppShadows.soft,
+      ),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.r),
+            child: Image.network(imageUrl, width: 90.w, height: 90.w, fit: BoxFit.cover),
+          ),
+          SizedBox(width: 16.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(name, style: AppTextStyles.labelMd),
+                Text(color, style: AppTextStyles.bodySm.copyWith(color: Colors.grey)),
+                SizedBox(height: 8.h),
+                Text('\$${price.toStringAsFixed(1)}', style: AppTextStyles.labelLg),
+              ],
             ),
           ),
-        ),
-        SizedBox(width: 16.w),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Sabra Chair', style: AppTextStyles.bodyLg.copyWith(fontWeight: FontWeight.w700)),
-                  Icon(Icons.delete_outline_rounded, color: Colors.red[400], size: 20.sp),
-                ],
-              ),
-              SizedBox(height: 4.h),
-              Text('Grey • Solid Wood', style: AppTextStyles.bodyMd),
-              SizedBox(height: 12.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('\$240.00', style: AppTextStyles.bodyLg.copyWith(fontWeight: FontWeight.w700, color: AppColors.primary)),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                    decoration: BoxDecoration(
-                      color: AppColors.surfaceContainerLow,
-                      borderRadius: BorderRadius.circular(AppRadius.sm),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(Icons.remove_rounded, size: 16.sp),
-                        SizedBox(width: 12.w),
-                        Text('1', style: AppTextStyles.labelMd.copyWith(fontWeight: FontWeight.bold, color: AppColors.onSurface)),
-                        SizedBox(width: 12.w),
-                        Icon(Icons.add_rounded, size: 16.sp),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              Icon(Icons.add, size: 20.sp, color: Colors.grey),
+              SizedBox(height: 8.h),
+              Text(quantity.toString(), style: AppTextStyles.labelMd),
+              SizedBox(height: 8.h),
+              Icon(Icons.remove, size: 20.sp, color: Colors.grey),
             ],
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSummary(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(AppSpacing.containerPadding),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 20, offset: const Offset(0, -5)),
         ],
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(AppRadius.lg),
-          topRight: Radius.circular(AppRadius.lg),
-        ),
-      ),
-      child: SafeArea(
-        child: Column(
-          children: [
-            _buildSummaryRow('Subtotal', '\$480.00'),
-            SizedBox(height: 12.h),
-            _buildSummaryRow('Delivery', '\$20.00'),
-            SizedBox(height: 16.h),
-            const Divider(),
-            SizedBox(height: 16.h),
-            _buildSummaryRow('Total', '\$500.00', isTotal: true),
-            SizedBox(height: 24.h),
-            AppButton(
-              text: 'Checkout',
-              onPressed: () => context.push(AppRouter.checkout),
-            ),
-          ],
-        ),
       ),
     );
   }
 
-  Widget _buildSummaryRow(String label, String value, {bool isTotal = false}) {
+  Widget _buildOrderInfo(bool isDark) {
+    return Container(
+      padding: EdgeInsets.all(24.w),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.surfaceDark : Colors.grey[50],
+        borderRadius: BorderRadius.circular(32.r),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Order Information', style: AppTextStyles.labelLg),
+          SizedBox(height: 16.h),
+          _buildInfoRow('Subtotal', '\$560.5'),
+          SizedBox(height: 12.h),
+          _buildInfoRow('Shipping cost', '\$70'),
+          SizedBox(height: 24.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Total', style: AppTextStyles.h2),
+              Text('\$630.5', style: AppTextStyles.h2),
+            ],
+          ),
+          SizedBox(height: 32.h),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                padding: EdgeInsets.symmetric(vertical: 18.h),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.r)),
+              ),
+              child: Text('Confirm order', style: AppTextStyles.labelLg.copyWith(color: Colors.white)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          label,
-          style: isTotal ? AppTextStyles.headlineSmall.copyWith(fontWeight: FontWeight.w700) : AppTextStyles.bodyMd,
-        ),
-        Text(
-          value,
-          style: isTotal ? AppTextStyles.headlineSmall.copyWith(fontWeight: FontWeight.w700, color: AppColors.primary) : AppTextStyles.bodyLg.copyWith(fontWeight: FontWeight.w700),
-        ),
+        Text(label, style: AppTextStyles.bodyMd.copyWith(color: Colors.grey)),
+        Text(value, style: AppTextStyles.labelMd),
       ],
     );
   }

@@ -4,7 +4,7 @@ import '../../../shared/widgets/app_app_bar.dart';
 import '../../../shared/widgets/app_card.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
-import '../../../theme/app_colors.dart' hide AppSpacing;
+import '../../../theme/app_colors.dart';
 
 class LoyaltyRewardsScreen extends StatelessWidget {
   const LoyaltyRewardsScreen({super.key});

@@ -3,10 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/app_app_bar.dart';
 import '../../../shared/widgets/app_button.dart';
-import '../../../shared/widgets/app_card.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
-import '../../../theme/app_colors.dart' hide AppSpacing;
+import '../../../theme/app_colors.dart';
 import '../../../routes/app_router.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -14,82 +13,88 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppAppBar(
         title: 'Profile',
         showBackButton: false,
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings_outlined, color: AppColors.primary),
+            icon: Icon(Icons.settings_outlined, color: isDark ? Colors.white : Colors.black),
             onPressed: () => context.push(AppRouter.settings),
           ),
           SizedBox(width: 8.w),
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(AppSpacing.containerPadding),
+        padding: EdgeInsets.all(AppSpacing.lg.w),
         child: Column(
           children: [
             SizedBox(height: 16.h),
-            _buildProfileHeader(),
-            SizedBox(height: 40.h),
-            _buildLoyaltyCard(context),
-            SizedBox(height: 40.h),
-            _buildMenuSection(context),
+            _buildProfileHeader(isDark),
+            SizedBox(height: 32.h),
+            _buildLoyaltyCard(context, isDark),
+            SizedBox(height: 32.h),
+            _buildMenuSection(context, isDark),
             SizedBox(height: 48.h),
             AppButton(
               text: 'Logout',
               variant: AppButtonVariant.outline,
               onPressed: () => context.go(AppRouter.login),
             ),
-            SizedBox(height: 24.h),
+            SizedBox(height: 40.h),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildProfileHeader() {
+  Widget _buildProfileHeader(bool isDark) {
     return Column(
       children: [
         Stack(
           children: [
             CircleAvatar(
               radius: 54.r,
-              backgroundColor: AppColors.surfaceContainerLow,
-              backgroundImage: const NetworkImage('https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=3744&auto=format&fit=crop'),
+              backgroundColor: isDark ? AppColors.surfaceDark : Colors.grey[200],
+              backgroundImage: const NetworkImage('https://i.pravatar.cc/300?u=Jane'),
             ),
             Positioned(
               bottom: 4,
               right: 4,
               child: Container(
-                padding: EdgeInsets.all(6.w),
-                decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
+                padding: EdgeInsets.all(8.w),
+                decoration: const BoxDecoration(color: Colors.black, shape: BoxShape.circle),
                 child: Icon(Icons.camera_alt_rounded, color: Colors.white, size: 18.sp),
               ),
             ),
           ],
         ),
         SizedBox(height: 16.h),
-        Text('Jane Doe', style: AppTextStyles.headlineSmall.copyWith(fontSize: 22.sp, fontWeight: FontWeight.w700)),
+        Text('Jane Doe', style: AppTextStyles.h2),
         SizedBox(height: 4.h),
-        Text('jane.doe@example.com', style: AppTextStyles.bodyMd),
+        Text('jane.doe@example.com', style: AppTextStyles.bodyMd.copyWith(color: Colors.grey)),
       ],
     );
   }
 
-  Widget _buildLoyaltyCard(BuildContext context) {
+  Widget _buildLoyaltyCard(BuildContext context, bool isDark) {
     return GestureDetector(
-      onTap: () => context.push(AppRouter.loyaltyRewards),
-      child: AppCard(
-        color: AppColors.primary,
-        borderRadius: AppRadius.md,
+      onTap: () => context.push(AppRouter.loyalty),
+      child: Container(
+        padding: EdgeInsets.all(20.w),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(24.r),
+        ),
         child: Row(
           children: [
             Container(
               padding: EdgeInsets.all(12.w),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.15),
+                color: Colors.white.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(Icons.stars_rounded, color: Colors.amber, size: 32.sp),
@@ -99,8 +104,8 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Gold Member', style: AppTextStyles.bodyLg.copyWith(color: Colors.white, fontWeight: FontWeight.w700)),
-                  Text('2,450 Points • 12 Orders', style: AppTextStyles.labelMd.copyWith(color: Colors.white.withOpacity(0.7))),
+                  Text('Gold Member', style: AppTextStyles.labelLg.copyWith(color: Colors.white)),
+                  Text('2,450 Points • 12 Orders', style: AppTextStyles.bodySm.copyWith(color: Colors.white70)),
                 ],
               ),
             ),
@@ -111,35 +116,36 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuSection(BuildContext context) {
+  Widget _buildMenuSection(BuildContext context, bool isDark) {
     return Column(
       children: [
-        _buildMenuItem(Icons.person_outline_rounded, 'Edit Profile', () => context.push(AppRouter.editProfile)),
-        _buildMenuItem(Icons.shopping_bag_outlined, 'My Orders', () => {}),
-        _buildMenuItem(Icons.location_on_outlined, 'Shipping Addresses', () => context.push(AppRouter.shippingAddresses)),
-        _buildMenuItem(Icons.payment_outlined, 'Payment Methods', () => context.push(AppRouter.paymentMethods)),
-        _buildMenuItem(Icons.notifications_none_rounded, 'Notifications', () => context.push(AppRouter.notifications)),
-        _buildMenuItem(Icons.help_outline_rounded, 'Help Center', () => context.push(AppRouter.helpCenter)),
+        _buildMenuItem(isDark, Icons.person_outline_rounded, 'Edit Profile', () => context.push(AppRouter.editProfile)),
+        _buildMenuItem(isDark, Icons.shopping_bag_outlined, 'My Orders', () => context.push(AppRouter.myOrders)),
+        _buildMenuItem(isDark, Icons.location_on_outlined, 'Shipping Addresses', () => context.push(AppRouter.addresses)),
+        _buildMenuItem(isDark, Icons.payment_outlined, 'Payment Methods', () => context.push(AppRouter.payments)),
+        _buildMenuItem(isDark, Icons.notifications_none_rounded, 'Notifications', () => context.push(AppRouter.notifications)),
+        _buildMenuItem(isDark, Icons.help_outline_rounded, 'Help Center', () => context.push(AppRouter.helpCenter)),
       ],
     );
   }
 
-  Widget _buildMenuItem(IconData icon, String title, VoidCallback onTap) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 8.h),
+  Widget _buildMenuItem(bool isDark, IconData icon, String title, VoidCallback onTap) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 8.h),
       child: ListTile(
-        contentPadding: EdgeInsets.zero,
+        onTap: onTap,
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
         leading: Container(
           padding: EdgeInsets.all(10.w),
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainerLow,
-            borderRadius: BorderRadius.circular(AppRadius.sm),
+            color: isDark ? AppColors.surfaceDark : Colors.grey[100],
+            borderRadius: BorderRadius.circular(12.r),
           ),
-          child: Icon(icon, color: AppColors.primary, size: 22.sp),
+          child: Icon(icon, color: isDark ? Colors.white : Colors.black, size: 22.sp),
         ),
-        title: Text(title, style: AppTextStyles.bodyMd.copyWith(fontWeight: FontWeight.w600, color: AppColors.onSurface)),
+        title: Text(title, style: AppTextStyles.labelMd),
         trailing: Icon(Icons.chevron_right_rounded, size: 20.sp, color: Colors.grey),
-        onTap: onTap,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
       ),
     );
   }
