@@ -62,7 +62,7 @@ class ProductCard extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
-                            Icons.favorite_rounded,
+                            product.isFavorite ? Icons.favorite : Icons.favorite_border,
                             size: 20.sp,
                             color: AppColors.primary,
                           ),
@@ -107,11 +107,11 @@ class ProductCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6.r),
                       ),
                       child: Text(
-                        '4.8 ★',
+                        '${product.rating} ★',
                         style: TextStyle(
                           fontSize: 10.sp,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.onPrimaryContainer,
+                          color: Colors.white,  
                         ),
                       ),
                     ),
