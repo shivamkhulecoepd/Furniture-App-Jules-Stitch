@@ -21,6 +21,7 @@ import '../features/profile/screens/settings_screen.dart';
 import '../features/profile/screens/notifications_screen.dart';
 import '../features/profile/screens/loyalty_rewards_screen.dart';
 import '../features/profile/screens/my_orders_screen.dart';
+import '../features/profile/screens/order_details_screen.dart';
 import '../features/profile/screens/help_center_screen.dart';
 import '../features/profile/screens/privacy_policy_screen.dart';
 
@@ -47,6 +48,7 @@ class AppRouter {
   static const String notifications = '/notifications';
   static const String loyalty = '/loyalty';
   static const String myOrders = '/my-orders';
+  static const String orderDetails = '/order-details/:id';
   static const String helpCenter = '/help-center';
   static const String privacy = '/privacy';
 
@@ -89,6 +91,10 @@ class AppRouter {
       GoRoute(path: notifications, builder: (context, state) => const NotificationsScreen()),
       GoRoute(path: loyalty, builder: (context, state) => const LoyaltyRewardsScreen()),
       GoRoute(path: myOrders, builder: (context, state) => const MyOrdersScreen()),
+      GoRoute(
+        path: orderDetails,
+        builder: (context, state) => OrderDetailsScreen(orderId: state.pathParameters['id'] ?? 'TRX-8829'),
+      ),
       GoRoute(path: helpCenter, builder: (context, state) => const HelpCenterScreen()),
       GoRoute(path: privacy, builder: (context, state) => const PrivacyPolicyScreen()),
     ],

@@ -115,7 +115,7 @@ class MyOrdersScreen extends StatelessWidget {
                 )
               else
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => context.push('/order-details/TRX-8829'),
                   child: Text('View Details', style: AppTextStyles.labelSm.copyWith(color: Colors.black)),
                 ),
             ],
