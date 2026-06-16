@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_text_field.dart';
-import '../../../shared/widgets/app_app_bar.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../routes/app_router.dart';
@@ -14,16 +13,6 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppAppBar(
-        title: 'Modern Furniture',
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_bag_outlined, color: Colors.black, size: 24.sp),
-            onPressed: () {},
-          ),
-          SizedBox(width: 8.w),
-        ],
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w),

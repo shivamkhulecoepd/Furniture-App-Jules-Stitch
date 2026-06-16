@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:furniture_app_jules_stitch/routes/app_router.dart';
+import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/app_app_bar.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_spacing.dart';
@@ -16,7 +18,9 @@ class MyOrdersScreen extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+        backgroundColor: isDark
+            ? AppColors.backgroundDark
+            : AppColors.backgroundLight,
         appBar: AppAppBar(
           title: 'My Orders',
           bottom: TabBar(
@@ -48,11 +52,11 @@ class MyOrdersScreen extends StatelessWidget {
       padding: EdgeInsets.all(AppSpacing.lg.w),
       itemCount: status == 'active' ? 2 : 5,
       separatorBuilder: (context, index) => SizedBox(height: 16.h),
-      itemBuilder: (context, index) => _buildOrderCard(isDark, status),
+      itemBuilder: (context, index) => _buildOrderCard(isDark, status, context),
     );
   }
 
-  Widget _buildOrderCard(bool isDark, String status) {
+  Widget _buildOrderCard(bool isDark, String status, BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
@@ -80,17 +84,31 @@ class MyOrdersScreen extends StatelessWidget {
                   children: [
                     Text('Sabra Lounge Chair', style: AppTextStyles.labelMd),
                     SizedBox(height: 4.h),
-                    Text('Qty: 1 • Color: Obsidian', style: AppTextStyles.bodySm.copyWith(color: Colors.grey)),
+                    Text(
+                      'Qty: 1 • Color: Obsidian',
+                      style: AppTextStyles.bodySm.copyWith(color: Colors.grey),
+                    ),
                     SizedBox(height: 8.h),
-                    Text('\$240.00', style: AppTextStyles.labelMd.copyWith(color: Colors.black)),
+                    Text(
+                      '\$240.00',
+                      style: AppTextStyles.labelMd.copyWith(
+                        color: Colors.black,
+                      ),
+                    ),
                   ],
                 ),
               ),
               if (status == 'active')
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                  decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(8.r)),
-                  child: Text('In Transit', style: TextStyle(color: Colors.white, fontSize: 10.sp)),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Text(
+                    'In Transit',
+                    style: TextStyle(color: Colors.white, fontSize: 10.sp),
+                  ),
                 ),
             ],
           ),
@@ -100,21 +118,37 @@ class MyOrdersScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Order #TRX-8829', style: AppTextStyles.bodySm.copyWith(color: Colors.grey)),
+              Text(
+                'Order #TRX-8829',
+                style: AppTextStyles.bodySm.copyWith(color: Colors.grey),
+              ),
               if (status == 'active')
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push(AppRouter.trackOrder);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
-                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.r),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.w,
+                      vertical: 10.h,
+                    ),
                   ),
-                  child: Text('Track Order', style: AppTextStyles.labelSm.copyWith(color: Colors.white)),
+                  child: Text(
+                    'Track Order',
+                    style: AppTextStyles.labelSm.copyWith(color: Colors.white),
+                  ),
                 )
               else
                 TextButton(
                   onPressed: () {},
-                  child: Text('View Details', style: AppTextStyles.labelSm.copyWith(color: Colors.black)),
+                  child: Text(
+                    'View Details',
+                    style: AppTextStyles.labelSm.copyWith(color: Colors.black),
+                  ),
                 ),
             ],
           ),

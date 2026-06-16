@@ -59,7 +59,8 @@ class AppRouter {
   static const String orderSuccess = success;
 
   static final GoRouter router = GoRouter(
-    initialLocation: welcome,
+    // initialLocation: welcome,
+    initialLocation: catalog,
     routes: [
       GoRoute(path: welcome, builder: (context, state) => const WelcomeScreen()),
       GoRoute(path: login, builder: (context, state) => const LoginScreen()),
