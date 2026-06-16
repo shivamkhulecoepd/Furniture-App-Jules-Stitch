@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/app_app_bar.dart';
+import '../../../shared/widgets/app_bottom_nav.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../theme/app_colors.dart';
@@ -27,44 +28,54 @@ class CartScreen extends StatelessWidget {
           SizedBox(width: 8.w),
         ],
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.all(AppSpacing.lg.w),
-              children: [
-                _buildCartItem(
-                  isDark,
-                  name: 'Minimal Chair',
-                  color: 'Dark Gray Color',
-                  price: 110.0,
-                  imageUrl: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=200',
-                  quantity: 1,
+          Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.all(AppSpacing.lg.w),
+                  children: [
+                    _buildCartItem(
+                      isDark,
+                      name: 'Minimal Chair',
+                      color: 'Dark Gray Color',
+                      price: 110.0,
+                      imageUrl: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=200',
+                      quantity: 1,
+                    ),
+                    SizedBox(height: 16.h),
+                    _buildCartItem(
+                      isDark,
+                      name: 'Sleepover Arm',
+                      color: 'Navy Blue',
+                      price: 160.0,
+                      imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=200',
+                      quantity: 1,
+                    ),
+                    SizedBox(height: 16.h),
+                    _buildCartItem(
+                      isDark,
+                      name: 'Boogy Wool',
+                      color: 'Cream White',
+                      price: 220.5,
+                      imageUrl: 'https://images.unsplash.com/photo-1530018607912-eff2df114f11?w=200',
+                      quantity: 2,
+                    ),
+                    SizedBox(height: 32.h),
+                    _buildOrderInfo(context, isDark),
+                    SizedBox(height: 120.h),
+                  ],
                 ),
-                SizedBox(height: 16.h),
-                _buildCartItem(
-                  isDark,
-                  name: 'Sleepover Arm',
-                  color: 'Navy Blue',
-                  price: 160.0,
-                  imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=200',
-                  quantity: 1,
-                ),
-                SizedBox(height: 16.h),
-                _buildCartItem(
-                  isDark,
-                  name: 'Boogy Wool',
-                  color: 'Cream White',
-                  price: 220.5,
-                  imageUrl: 'https://images.unsplash.com/photo-1530018607912-eff2df114f11?w=200',
-                  quantity: 2,
-                ),
-                SizedBox(height: 32.h),
-                _buildOrderInfo(context, isDark),
-              ],
-            ),
+              ),
+            ],
           ),
-          SizedBox(height: 16.h),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: const AppBottomNav(currentIndex: 1),
+          ),
         ],
       ),
     );

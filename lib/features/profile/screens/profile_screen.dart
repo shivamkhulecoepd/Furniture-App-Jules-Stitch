@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/app_app_bar.dart';
 import '../../../shared/widgets/app_button.dart';
+import '../../../shared/widgets/app_bottom_nav.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../theme/app_colors.dart';
@@ -28,25 +29,35 @@ class ProfileScreen extends StatelessWidget {
           SizedBox(width: 8.w),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(AppSpacing.lg.w),
-        child: Column(
-          children: [
-            SizedBox(height: 16.h),
-            _buildProfileHeader(isDark),
-            SizedBox(height: 32.h),
-            _buildLoyaltyCard(context, isDark),
-            SizedBox(height: 32.h),
-            _buildMenuSection(context, isDark),
-            SizedBox(height: 48.h),
-            AppButton(
-              text: 'Logout',
-              variant: AppButtonVariant.outline,
-              onPressed: () => context.go(AppRouter.login),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            padding: EdgeInsets.all(AppSpacing.lg.w),
+            child: Column(
+              children: [
+                SizedBox(height: 16.h),
+                _buildProfileHeader(isDark),
+                SizedBox(height: 32.h),
+                _buildLoyaltyCard(context, isDark),
+                SizedBox(height: 32.h),
+                _buildMenuSection(context, isDark),
+                SizedBox(height: 48.h),
+                AppButton(
+                  text: 'Logout',
+                  variant: AppButtonVariant.outline,
+                  onPressed: () => context.go(AppRouter.login),
+                ),
+                SizedBox(height: 120.h),
+              ],
             ),
-            SizedBox(height: 40.h),
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: const AppBottomNav(currentIndex: 3),
+          ),
+        ],
       ),
     );
   }

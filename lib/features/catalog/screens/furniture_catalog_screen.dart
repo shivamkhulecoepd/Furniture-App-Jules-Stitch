@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_styles.dart';
-import '../../../theme/app_spacing.dart';
 import '../../../routes/app_router.dart';
-import '../../../models/product.dart';
 import '../widgets/product_card.dart';
+import '../../../models/product.dart';
 import 'filter_sort_screen.dart';
+import '../../../shared/widgets/app_bottom_nav.dart';
 
 class FurnitureCatalogScreen extends StatelessWidget {
   const FurnitureCatalogScreen({super.key});
@@ -22,50 +22,29 @@ class FurnitureCatalogScreen extends StatelessWidget {
         bottom: false,
         child: Stack(
           children: [
-            Column(
-              children: [
-                _buildHeader(context, isDark),
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 24.h),
-                        _buildFeaturedBanner(context),
-                        SizedBox(height: 32.h),
-                        _buildCategories(context, isDark),
-                        SizedBox(height: 32.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Popular Products', style: AppTextStyles.h2),
-                            GestureDetector(
-                              onTap: () => context.push('/category/All'),
-                              child: Text(
-                                'View All',
-                                style: AppTextStyles.labelMd.copyWith(
-                                  color: Colors.grey,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20.h),
-                        _buildProductGrid(context),
-                        SizedBox(height: 100.h),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+            SingleChildScrollView(
+              padding: EdgeInsets.all(24.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildHeader(context, isDark),
+                  SizedBox(height: 24.h),
+                  _buildFeaturedBanner(context),
+                  SizedBox(height: 32.h),
+                  _buildCategories(context, isDark),
+                  SizedBox(height: 32.h),
+                  Text('Popular Furniture', style: AppTextStyles.h2),
+                  SizedBox(height: 16.h),
+                  _buildProductGrid(context),
+                  SizedBox(height: 100.h), // Space for bottom nav
+                ],
+              ),
             ),
             Positioned(
               bottom: 0,
               left: 0,
               right: 0,
-              child: _buildBottomNav(context),
+              child: const AppBottomNav(currentIndex: 0),
             ),
           ],
         ),
@@ -74,50 +53,39 @@ class FurnitureCatalogScreen extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context, bool isDark) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w, vertical: 16.h),
-      child: Row(
-        children: [
-          Container(
+    return Row(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Delivery to', style: AppTextStyles.bodySm.copyWith(color: Colors.grey)),
+            Row(
+              children: [
+                Icon(Icons.location_on, color: AppColors.primary, size: 14.sp),
+                SizedBox(width: 4.w),
+                Text('San Francisco, CA', style: AppTextStyles.labelMd),
+                Icon(Icons.keyboard_arrow_down, color: Colors.grey, size: 18.sp),
+              ],
+            ),
+          ],
+        ),
+        const Spacer(),
+        GestureDetector(
+          onTap: () => context.push(AppRouter.cart),
+          child: Container(
             padding: EdgeInsets.all(12.w),
             decoration: BoxDecoration(
               color: isDark ? AppColors.surfaceDark : Colors.grey[100],
               borderRadius: BorderRadius.circular(16.r),
             ),
-            child: Icon(Icons.menu_rounded, color: isDark ? Colors.white : Colors.black, size: 24.sp),
-          ),
-          const Spacer(),
-          Column(
-            children: [
-              Text('Location', style: AppTextStyles.bodySm.copyWith(color: Colors.grey)),
-              Row(
-                children: [
-                  Icon(Icons.location_on, color: AppColors.primary, size: 14.sp),
-                  SizedBox(width: 4.w),
-                  Text('San Francisco, CA', style: AppTextStyles.labelMd),
-                  Icon(Icons.keyboard_arrow_down, color: Colors.grey, size: 18.sp),
-                ],
-              ),
-            ],
-          ),
-          const Spacer(),
-          GestureDetector(
-            onTap: () => context.push(AppRouter.cart),
-            child: Container(
-              padding: EdgeInsets.all(12.w),
-              decoration: BoxDecoration(
-                color: isDark ? AppColors.surfaceDark : Colors.grey[100],
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              child: Badge(
-                label: const Text('3'),
-                backgroundColor: AppColors.primary,
-                child: Icon(Icons.shopping_bag_outlined, color: isDark ? Colors.white : Colors.black, size: 24.sp),
-              ),
+            child: Badge(
+              label: const Text('3'),
+              backgroundColor: AppColors.primary,
+              child: Icon(Icons.shopping_bag_outlined, color: isDark ? Colors.white : Colors.black, size: 24.sp),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -182,7 +150,7 @@ class FurnitureCatalogScreen extends StatelessWidget {
             right: -20.w,
             bottom: -20.h,
             child: Image.network(
-              'https://lh3.googleusercontent.com/aida-public/AB6AXuAjhWE26nnqHFtIH6EXSPD70JmZCYiF5kSiGo7Fv5AbM3duJ2Mx8JNrLR7m5lzBlEZuGoB99bZQBtLB6m_k-FueJeHZWXl_DbSQE4J9XLaRlFSUGnq_N-KkTJLc6nSMhyKR-uAxiU5huT1NMvEN5DzIGApYwwxbpn8yeTEV4v8Ik7xbT00lNENqRMzViEPzPKiE79nWxJIkpuUADZSpPhLFTQnW7fAjnHIIoYAXkGclOolkeX3DvBJoPycLDObfo309mhJMvUs1kAw',
+              'https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=1000&auto=format&fit=crop',
               height: 220.h,
               fit: BoxFit.contain,
             ),
@@ -274,7 +242,7 @@ class FurnitureCatalogScreen extends StatelessWidget {
         name: 'Sabra Chair',
         description: 'Modern minimalist chair',
         price: 240.0,
-        imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAjhWE26nnqHFtIH6EXSPD70JmZCYiF5kSiGo7Fv5AbM3duJ2Mx8JNrLR7m5lzBlEZuGoB99bZQBtLB6m_k-FueJeHZWXl_DbSQE4J9XLaRlFSUGnq_N-KkTJLc6nSMhyKR-uAxiU5huT1NMvEN5DzIGApYwwxbpn8yeTEV4v8Ik7xbT00lNENqRMzViEPzPKiE79nWxJIkpuUADZSpPhLFTQnW7fAjnHIIoYAXkGclOolkeX3DvBJoPycLDObfo309mhJMvUs1kAw',
+        imageUrl: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?q=80&w=1000&auto=format&fit=crop',
         category: 'Chairs',
       ),
       const Product(
@@ -282,7 +250,7 @@ class FurnitureCatalogScreen extends StatelessWidget {
         name: 'Sleepover Arm',
         description: 'Comfortable armchair',
         price: 160.0,
-        imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC7zC2N952t7qT-m64BAnl6_2_7f9_A8i7K0jS10383792038475920384759203847592038475920384759203847592038475920',
+        imageUrl: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop',
         category: 'Chairs',
       ),
     ];
@@ -303,51 +271,6 @@ class FurnitureCatalogScreen extends StatelessWidget {
           onTap: () => context.push('/product/${products[index].id}'),
         );
       },
-    );
-  }
-
-  Widget _buildBottomNav(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 24.w),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(32.r)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 30,
-            offset: const Offset(0, -10),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildNavItem(Icons.home, true, () {}),
-            _buildNavItem(Icons.favorite_outline, false, () => context.push(AppRouter.cart)), // Favorites mock as Cart for now
-            _buildNavItem(Icons.notifications_none, false, () => context.push(AppRouter.notifications)),
-            _buildNavItem(Icons.person_outline, false, () => context.push(AppRouter.profile)),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNavItem(IconData icon, bool isSelected, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.all(12.w),
-        decoration: isSelected
-            ? BoxDecoration(color: AppColors.primary, shape: BoxShape.circle)
-            : null,
-        child: Icon(
-          icon,
-          color: isSelected ? AppColors.onPrimary : AppColors.onSurfaceVariant,
-          size: 24.sp,
-        ),
-      ),
     );
   }
 
