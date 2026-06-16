@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/app_app_bar.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_shadows.dart';
+import '../../../routes/app_router.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -16,10 +18,10 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppAppBar(
-        title: 'Wish List',
+        title: 'Cart',
         actions: [
           IconButton(
-            icon: Icon(Icons.shopping_bag_outlined, color: isDark ? Colors.white : Colors.black),
+            icon: Icon(Icons.delete_outline_rounded, color: isDark ? Colors.white : Colors.black),
             onPressed: () {},
           ),
           SizedBox(width: 8.w),
@@ -58,7 +60,7 @@ class CartScreen extends StatelessWidget {
                   quantity: 2,
                 ),
                 SizedBox(height: 32.h),
-                _buildOrderInfo(isDark),
+                _buildOrderInfo(context, isDark),
               ],
             ),
           ),
@@ -103,11 +105,22 @@ class CartScreen extends StatelessWidget {
           ),
           Column(
             children: [
-              Icon(Icons.add, size: 20.sp, color: Colors.grey),
-              SizedBox(height: 8.h),
-              Text(quantity.toString(), style: AppTextStyles.labelMd),
-              SizedBox(height: 8.h),
-              Icon(Icons.remove, size: 20.sp, color: Colors.grey),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.add_rounded, size: 20.sp, color: Colors.grey),
+                constraints: const BoxConstraints(),
+                padding: EdgeInsets.zero,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.h),
+                child: Text(quantity.toString(), style: AppTextStyles.labelMd),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.remove_rounded, size: 20.sp, color: Colors.grey),
+                constraints: const BoxConstraints(),
+                padding: EdgeInsets.zero,
+              ),
             ],
           ),
         ],
@@ -115,7 +128,7 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderInfo(bool isDark) {
+  Widget _buildOrderInfo(BuildContext context, bool isDark) {
     return Container(
       padding: EdgeInsets.all(24.w),
       decoration: BoxDecoration(
@@ -142,7 +155,7 @@ class CartScreen extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () => context.push(AppRouter.checkout),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,
                 padding: EdgeInsets.symmetric(vertical: 18.h),

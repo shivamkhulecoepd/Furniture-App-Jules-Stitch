@@ -8,38 +8,26 @@ import '../../../theme/app_spacing.dart';
 import '../../../theme/app_colors.dart';
 import '../../../routes/app_router.dart';
 
-class ProductDetailsScreen extends StatefulWidget {
+class ProductDetailsScreen extends StatelessWidget {
   final String productId;
 
   const ProductDetailsScreen({super.key, required this.productId});
 
   @override
-  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
-}
-
-class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  int itemCount = 1;
-  @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark
-          ? AppColors.backgroundDark
-          : AppColors.backgroundLight,
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
         elevation: 0,
         leading: Padding(
           padding: EdgeInsets.only(left: 16.w),
           child: CircleAvatar(
             backgroundColor: Colors.white.withValues(alpha: 0.8),
-            child: BackButton(
-              color: Colors.black,
-              onPressed: () => context.pop(),
-            ),
+            child: BackButton(color: Colors.black, onPressed: () => context.pop()),
           ),
         ),
         actions: [
@@ -48,10 +36,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             child: CircleAvatar(
               backgroundColor: Colors.white.withValues(alpha: 0.8),
               child: IconButton(
-                icon: const Icon(
-                  Icons.favorite_border_rounded,
-                  color: Colors.black,
-                ),
+                icon: const Icon(Icons.favorite_border_rounded, color: Colors.black),
                 onPressed: () {},
               ),
             ),
@@ -76,12 +61,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         children: [
                           Text('Sabra Chair', style: AppTextStyles.h2),
                           SizedBox(height: 4.h),
-                          Text(
-                            'Modern Minimalist',
-                            style: AppTextStyles.bodyMd.copyWith(
-                              color: Colors.grey,
-                            ),
-                          ),
+                          Text('Modern Minimalist', style: AppTextStyles.bodyMd.copyWith(color: Colors.grey)),
                         ],
                       ),
                       Text(
@@ -97,10 +77,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   SizedBox(height: 12.h),
                   Text(
                     'The Sabra Chair features a minimalist silhouette with ergonomic support. Crafted with premium materials to ensure both style and durability for your living space.',
-                    style: AppTextStyles.bodyMd.copyWith(
-                      height: 1.6,
-                      color: Colors.black87,
-                    ),
+                    style: AppTextStyles.bodyMd.copyWith(height: 1.6, color: Colors.black87),
                   ),
                   SizedBox(height: 32.h),
                   _buildColorSelector(isDark),
@@ -132,8 +109,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           bottomRight: Radius.circular(48.r),
         ),
         child: CachedNetworkImage(
-          imageUrl:
-              'https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=2864&auto=format&fit=crop',
+          imageUrl: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=2864&auto=format&fit=crop',
           fit: BoxFit.cover,
         ),
       ),
@@ -153,18 +129,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             children: [
               Icon(Icons.star_rounded, color: Colors.amber, size: 18.sp),
               SizedBox(width: 4.w),
-              Text(
-                '4.8',
-                style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold),
-              ),
+              Text('4.8', style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold)),
             ],
           ),
         ),
         SizedBox(width: 12.w),
-        Text(
-          '(128 Reviews)',
-          style: AppTextStyles.bodySm.copyWith(color: Colors.grey),
-        ),
+        Text('(128 Reviews)', style: AppTextStyles.bodySm.copyWith(color: Colors.grey)),
         const Spacer(),
         GestureDetector(
           onTap: () => context.push(AppRouter.reviews),
@@ -196,11 +166,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               padding: EdgeInsets.all(3.w),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: isSelected
-                    ? Border.all(color: Colors.black, width: 2)
-                    : null,
+                border: isSelected ? Border.all(color: Colors.black, width: 2) : null,
               ),
-              child: CircleAvatar(radius: 14.r, backgroundColor: colors[index]),
+              child: CircleAvatar(
+                radius: 14.r,
+                backgroundColor: colors[index],
+              ),
             );
           }),
         ),
@@ -210,7 +181,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   Widget _buildBottomBar(BuildContext context, bool isDark) {
     return Container(
-      padding: EdgeInsets.all(AppSpacing.md.w),
+      padding: EdgeInsets.all(AppSpacing.lg.w),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(32.r)),
@@ -226,48 +197,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.all(2.w),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey[200]!),
                 borderRadius: BorderRadius.circular(16.r),
               ),
               child: Row(
-                spacing: 2.w,
                 children: [
-                  // Icon(Icons.remove_rounded, size: 22.sp, color: Colors.black),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      if (itemCount > 1) {
-                        setState(() {
-                          itemCount--;
-                        });
-                      }
-                    },
-                    icon: Icon(
-                      Icons.remove_rounded,
-                      size: 22.sp,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Text(
-                    '$itemCount',
-                    style: AppTextStyles.labelLg.copyWith(color: Colors.black),
-                  ),
-                  // Icon(Icons.add_rounded, size: 22.sp, color: Colors.black),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      setState(() {
-                        itemCount++;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.add_rounded,
-                      size: 22.sp,
-                      color: Colors.black,
-                    ),
-                  ),
+                  Icon(Icons.remove_rounded, size: 22.sp, color: Colors.black),
+                  SizedBox(width: 16.w),
+                  Text('1', style: AppTextStyles.labelLg.copyWith(color: Colors.black)),
+                  SizedBox(width: 16.w),
+                  Icon(Icons.add_rounded, size: 22.sp, color: Colors.black),
                 ],
               ),
             ),

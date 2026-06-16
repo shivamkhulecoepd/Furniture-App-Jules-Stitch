@@ -42,7 +42,6 @@ class AppAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: leading ?? (showBackButton ? BackButton(color: isDark ? Colors.white : Colors.black) : null),
       actions: actions,
       backgroundColor: Colors.transparent,
-      surfaceTintColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
       bottom: bottom,

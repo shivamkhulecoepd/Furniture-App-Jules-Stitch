@@ -9,14 +9,9 @@ import '../../../theme/app_spacing.dart';
 import '../../../theme/app_colors.dart';
 import '../../../routes/app_router.dart';
 
-class CheckoutScreen extends StatefulWidget {
+class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
 
-  @override
-  State<CheckoutScreen> createState() => _CheckoutScreenState();
-}
-
-class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,26 +21,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSectionHeader(
-              'Shipping Address',
-              () => context.push(AppRouter.shippingAddresses),
-            ),
+            _buildSectionHeader('Shipping Address', () => context.push(AppRouter.shippingAddresses)),
             SizedBox(height: 16.h),
             _buildAddressCard(),
             SizedBox(height: 32.h),
-            _buildSectionHeader(
-              'Payment Method',
-              () => context.push(AppRouter.paymentMethods),
-            ),
+            _buildSectionHeader('Payment Method', () => context.push(AppRouter.paymentMethods)),
             SizedBox(height: 16.h),
             _buildPaymentCard(),
             SizedBox(height: 40.h),
-            Text(
-              'Order Summary',
-              style: AppTextStyles.headlineSmall.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+            Text('Order Summary', style: AppTextStyles.headlineSmall.copyWith(fontWeight: FontWeight.w700)),
             SizedBox(height: 20.h),
             _buildSummaryRow('Subtotal', '\$480.00'),
             SizedBox(height: 12.h),
@@ -72,12 +56,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: AppTextStyles.headlineSmall.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        Text(title, style: AppTextStyles.headlineSmall.copyWith(fontWeight: FontWeight.w700)),
         GestureDetector(
           onTap: onEdit,
           child: Text(
@@ -99,27 +78,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         children: [
           Container(
             padding: EdgeInsets.all(8.w),
-            decoration: BoxDecoration(
-              color: AppColors.surfaceContainerLow,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.location_on_rounded,
-              color: AppColors.primary,
-              size: 20.sp,
-            ),
+            decoration: BoxDecoration(color: AppColors.surfaceContainerLow, shape: BoxShape.circle),
+            child: Icon(Icons.location_on_rounded, color: AppColors.primary, size: 20.sp),
           ),
           SizedBox(width: 16.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Home',
-                  style: AppTextStyles.bodyLg.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Text('Home', style: AppTextStyles.bodyLg.copyWith(fontWeight: FontWeight.bold)),
                 Text(
                   '123 Furniture St, Design District\nNew York, NY 10001',
                   style: AppTextStyles.bodyMd,
@@ -138,36 +105,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         children: [
           Container(
             padding: EdgeInsets.all(8.w),
-            decoration: BoxDecoration(
-              color: AppColors.surfaceContainerLow,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.credit_card_rounded,
-              color: AppColors.primary,
-              size: 20.sp,
-            ),
+            decoration: BoxDecoration(color: AppColors.surfaceContainerLow, shape: BoxShape.circle),
+            child: Icon(Icons.credit_card_rounded, color: AppColors.primary, size: 20.sp),
           ),
           SizedBox(width: 16.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Visa **** 1234',
-                  style: AppTextStyles.bodyLg.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Text('Visa **** 1234', style: AppTextStyles.bodyLg.copyWith(fontWeight: FontWeight.bold)),
                 Text('Expires 12/26', style: AppTextStyles.bodyMd),
               ],
             ),
           ),
-          Icon(
-            Icons.check_circle_rounded,
-            color: AppColors.primary,
-            size: 20.sp,
-          ),
+          Icon(Icons.check_circle_rounded, color: AppColors.primary, size: 20.sp),
         ],
       ),
     );
@@ -179,20 +130,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       children: [
         Text(
           label,
-          style: isTotal
-              ? AppTextStyles.headlineSmall.copyWith(
-                  fontWeight: FontWeight.w700,
-                )
-              : AppTextStyles.bodyMd,
+          style: isTotal ? AppTextStyles.headlineSmall.copyWith(fontWeight: FontWeight.w700) : AppTextStyles.bodyMd,
         ),
         Text(
           value,
-          style: isTotal
-              ? AppTextStyles.headlineSmall.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.primary,
-                )
-              : AppTextStyles.bodyLg.copyWith(fontWeight: FontWeight.w700),
+          style: isTotal ? AppTextStyles.headlineSmall.copyWith(fontWeight: FontWeight.w700, color: AppColors.primary) : AppTextStyles.bodyLg.copyWith(fontWeight: FontWeight.w700),
         ),
       ],
     );

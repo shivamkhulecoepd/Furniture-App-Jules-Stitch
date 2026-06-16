@@ -7,6 +7,7 @@ import '../../../theme/app_spacing.dart';
 import '../../../theme/app_colors.dart';
 import '../../../models/product.dart';
 import '../widgets/product_card.dart';
+import 'filter_sort_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -56,7 +57,7 @@ class _SearchScreenState extends State<SearchScreen> {
         actions: [
           IconButton(
             icon: Icon(Icons.tune_rounded, color: isDark ? Colors.white : Colors.black),
-            onPressed: () {},
+            onPressed: () => _showFilterSheet(context),
           ),
           SizedBox(width: 8.w),
         ],
@@ -163,7 +164,7 @@ class _SearchScreenState extends State<SearchScreen> {
       itemCount: _searchResults.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.7,
+        childAspectRatio: 0.62,
         crossAxisSpacing: 16.w,
         mainAxisSpacing: 16.h,
       ),
@@ -183,7 +184,7 @@ class _SearchScreenState extends State<SearchScreen> {
       itemCount: _searchResults.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.7,
+        childAspectRatio: 0.62,
         crossAxisSpacing: 16.w,
         mainAxisSpacing: 16.h,
       ),
@@ -193,6 +194,15 @@ class _SearchScreenState extends State<SearchScreen> {
           onTap: () => context.push('/product/${_searchResults[index].id}'),
         );
       },
+    );
+  }
+
+  void _showFilterSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const FilterSortScreen(),
     );
   }
 }

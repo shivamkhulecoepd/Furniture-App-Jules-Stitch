@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:furniture_app_jules_stitch/routes/app_router.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/app_app_bar.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_shadows.dart';
+import '../../../routes/app_router.dart';
 
 class MyOrdersScreen extends StatelessWidget {
   const MyOrdersScreen({super.key});
@@ -18,9 +18,7 @@ class MyOrdersScreen extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        backgroundColor: isDark
-            ? AppColors.backgroundDark
-            : AppColors.backgroundLight,
+        backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
         appBar: AppAppBar(
           title: 'My Orders',
           bottom: TabBar(
@@ -38,25 +36,25 @@ class MyOrdersScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            _buildOrdersList(isDark, 'active'),
-            _buildOrdersList(isDark, 'completed'),
-            _buildOrdersList(isDark, 'cancelled'),
+            _buildOrdersList(context, isDark, 'active'),
+            _buildOrdersList(context, isDark, 'completed'),
+            _buildOrdersList(context, isDark, 'cancelled'),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildOrdersList(bool isDark, String status) {
+  Widget _buildOrdersList(BuildContext context, bool isDark, String status) {
     return ListView.separated(
       padding: EdgeInsets.all(AppSpacing.lg.w),
       itemCount: status == 'active' ? 2 : 5,
       separatorBuilder: (context, index) => SizedBox(height: 16.h),
-      itemBuilder: (context, index) => _buildOrderCard(isDark, status, context),
+      itemBuilder: (context, index) => _buildOrderCard(context, isDark, status),
     );
   }
 
-  Widget _buildOrderCard(bool isDark, String status, BuildContext context) {
+  Widget _buildOrderCard(BuildContext context, bool isDark, String status) {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
@@ -84,31 +82,17 @@ class MyOrdersScreen extends StatelessWidget {
                   children: [
                     Text('Sabra Lounge Chair', style: AppTextStyles.labelMd),
                     SizedBox(height: 4.h),
-                    Text(
-                      'Qty: 1 • Color: Obsidian',
-                      style: AppTextStyles.bodySm.copyWith(color: Colors.grey),
-                    ),
+                    Text('Qty: 1 • Color: Obsidian', style: AppTextStyles.bodySm.copyWith(color: Colors.grey)),
                     SizedBox(height: 8.h),
-                    Text(
-                      '\$240.00',
-                      style: AppTextStyles.labelMd.copyWith(
-                        color: Colors.black,
-                      ),
-                    ),
+                    Text('\$240.00', style: AppTextStyles.labelMd.copyWith(color: Colors.black)),
                   ],
                 ),
               ),
               if (status == 'active')
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: Text(
-                    'In Transit',
-                    style: TextStyle(color: Colors.white, fontSize: 10.sp),
-                  ),
+                  decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(8.r)),
+                  child: Text('In Transit', style: TextStyle(color: Colors.white, fontSize: 10.sp)),
                 ),
             ],
           ),
@@ -118,37 +102,21 @@ class MyOrdersScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Order #TRX-8829',
-                style: AppTextStyles.bodySm.copyWith(color: Colors.grey),
-              ),
+              Text('Order #TRX-8829', style: AppTextStyles.bodySm.copyWith(color: Colors.grey)),
               if (status == 'active')
                 ElevatedButton(
-                  onPressed: () {
-                    context.push(AppRouter.trackOrder);
-                  },
+                  onPressed: () => context.push(AppRouter.trackOrder),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.r),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20.w,
-                      vertical: 10.h,
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                   ),
-                  child: Text(
-                    'Track Order',
-                    style: AppTextStyles.labelSm.copyWith(color: Colors.white),
-                  ),
+                  child: Text('Track Order', style: AppTextStyles.labelSm.copyWith(color: Colors.white)),
                 )
               else
                 TextButton(
                   onPressed: () {},
-                  child: Text(
-                    'View Details',
-                    style: AppTextStyles.labelSm.copyWith(color: Colors.black),
-                  ),
+                  child: Text('View Details', style: AppTextStyles.labelSm.copyWith(color: Colors.black)),
                 ),
             ],
           ),

@@ -33,7 +33,7 @@ class AppRouter {
   static const String catalog = '/catalog';
   static const String productDetails = '/product/:id';
   static const String search = '/search';
-  static const String category = '/category';
+  static const String category = '/category/:name';
   static const String reviews = '/reviews';
   static const String cart = '/cart';
   static const String checkout = '/checkout';
@@ -59,8 +59,7 @@ class AppRouter {
   static const String orderSuccess = success;
 
   static final GoRouter router = GoRouter(
-    // initialLocation: welcome,
-    initialLocation: catalog,
+    initialLocation: welcome,
     routes: [
       GoRoute(path: welcome, builder: (context, state) => const WelcomeScreen()),
       GoRoute(path: login, builder: (context, state) => const LoginScreen()),
@@ -75,7 +74,7 @@ class AppRouter {
       GoRoute(path: search, builder: (context, state) => const SearchScreen()),
       GoRoute(
         path: category,
-        builder: (context, state) => const CategoryScreen(categoryName: 'Chairs'),
+        builder: (context, state) => CategoryScreen(categoryName: state.pathParameters['name'] ?? 'Chairs'),
       ),
       GoRoute(path: reviews, builder: (context, state) => const ReviewsScreen()),
       GoRoute(path: cart, builder: (context, state) => const CartScreen()),
