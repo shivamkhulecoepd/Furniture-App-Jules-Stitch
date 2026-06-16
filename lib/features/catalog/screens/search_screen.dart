@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import '../../../shared/widgets/app_app_bar.dart';
+import '../../../shared/widgets/app_bottom_nav.dart';
 import '../../../theme/app_text_styles.dart';
-import '../../../theme/app_spacing.dart';
 import '../../../theme/app_colors.dart';
 import '../../../models/product.dart';
-import '../widgets/product_card.dart';
-import 'filter_sort_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -18,31 +15,59 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _controller = TextEditingController();
-  bool _showResults = false;
+  String _selectedCategory = 'All';
 
-  final List<String> _recentSearches = [
-    'Minimalist Chair',
-    'Modern Sofa',
-    'Wooden Table',
-    'Lounge Chair',
-  ];
+  final List<String> _categories = ['All', 'Sofa', 'Chair', 'Table', 'Bed', 'Lamp'];
 
-  final List<Product> _searchResults = [
+  // Mock data for search results
+  final List<Product> _products = [
     const Product(
       id: '1',
-      name: 'Minimal Chair',
-      description: 'Oak & Cotton',
-      price: 110.0,
+      name: 'Modern Velvet Sofa',
+      description: 'Velvet • Qty: 1',
+      price: 540.0,
+      imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
+      category: 'Sofa',
+    ),
+    const Product(
+      id: '2',
+      name: 'Nordic Armchair',
+      description: 'Oak • Qty: 1',
+      price: 320.0,
       imageUrl: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400',
-      category: 'Chairs',
+      category: 'Chair',
     ),
     const Product(
       id: '3',
-      name: 'Modern Armchair',
-      description: 'Charcoal Wool',
-      price: 320.0,
+      name: 'Minimalist Table',
+      description: 'Wood • Qty: 1',
+      price: 450.0,
       imageUrl: 'https://images.unsplash.com/photo-1530018607912-eff2df114f11?w=400',
-      category: 'Chairs',
+      category: 'Table',
+    ),
+    const Product(
+      id: '4',
+      name: 'Bedside Lamp',
+      description: 'Metal • Qty: 1',
+      price: 85.0,
+      imageUrl: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400',
+      category: 'Lamp',
+    ),
+    const Product(
+      id: '5',
+      name: 'King Size Bed',
+      description: 'Fabric • Qty: 1',
+      price: 1200.0,
+      imageUrl: 'https://images.unsplash.com/photo-1505693419173-42b9256a0ecc?w=400',
+      category: 'Bed',
+    ),
+    const Product(
+      id: '6',
+      name: 'Office Chair',
+      description: 'Ergonomic • Qty: 1',
+      price: 280.0,
+      imageUrl: 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?w=400',
+      category: 'Chair',
     ),
   ];
 
@@ -52,157 +77,243 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppAppBar(
-        title: 'Search',
-        actions: [
-          IconButton(
-            icon: Icon(Icons.tune_rounded, color: isDark ? Colors.white : Colors.black),
-            onPressed: () => _showFilterSheet(context),
-          ),
-          SizedBox(width: 8.w),
-        ],
-      ),
-      body: Column(
+      body: Stack(
         children: [
-          Padding(
-            padding: EdgeInsets.all(AppSpacing.lg.w),
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
-              decoration: BoxDecoration(
-                color: isDark ? AppColors.surfaceDark : AppColors.surfaceContainerLow,
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              child: TextField(
-                controller: _controller,
-                onSubmitted: (value) {
-                  if (value.isNotEmpty) {
-                    setState(() => _showResults = true);
-                  }
-                },
-                decoration: InputDecoration(
-                  hintText: 'Search furniture...',
-                  hintStyle: AppTextStyles.bodyMd.copyWith(color: Colors.grey),
-                  border: InputBorder.none,
-                  prefixIcon: Icon(Icons.search, color: Colors.grey, size: 20.sp),
-                  suffixIcon: _controller.text.isNotEmpty
-                      ? IconButton(
-                          icon: Icon(Icons.close, size: 18.sp),
-                          onPressed: () {
-                            _controller.clear();
-                            setState(() => _showResults = false);
-                          },
-                        )
-                      : null,
+          CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).padding.top + 20.h,
+                    left: 20.w,
+                    right: 20.w,
+                  ),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => context.pop(),
+                        child: Container(
+                          padding: EdgeInsets.all(12.w),
+                          decoration: BoxDecoration(
+                            color: isDark ? AppColors.cardDark : Colors.white,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: isDark ? Colors.white10 : Colors.black12),
+                          ),
+                          child: Icon(Icons.arrow_back, size: 20.sp, color: isDark ? Colors.white : Colors.black),
+                        ),
+                      ),
+                      SizedBox(width: 12.w),
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          height: 50.h,
+                          decoration: BoxDecoration(
+                            color: isDark ? AppColors.cardDark : Colors.white,
+                            borderRadius: BorderRadius.circular(25.r),
+                            border: Border.all(color: isDark ? Colors.white10 : Colors.black12),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(Icons.search, color: Colors.grey, size: 20.sp),
+                              SizedBox(width: 8.w),
+                              Expanded(
+                                child: TextField(
+                                  controller: _controller,
+                                  decoration: InputDecoration(
+                                    hintText: 'Search furniture',
+                                    hintStyle: AppTextStyles.bodyMd.copyWith(color: Colors.grey),
+                                    border: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 12.w),
+                      Container(
+                        padding: EdgeInsets.all(12.w),
+                        decoration: BoxDecoration(
+                          color: isDark ? AppColors.cardDark : Colors.white,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: isDark ? Colors.white10 : Colors.black12),
+                        ),
+                        child: Icon(Icons.tune, size: 20.sp, color: isDark ? Colors.white : Colors.black),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 24.h),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Row(
+                      children: _categories.map((cat) => _buildCategoryChip(cat, isDark)).toList(),
+                    ),
+                  ),
+                ),
+              ),
+              SliverPadding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                sliver: SliverList(
+                  delegate: SliverChildListDelegate([
+                    _buildAsymmetricGrid(context, isDark),
+                    SizedBox(height: 120.h),
+                  ]),
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: const AppBottomNav(currentIndex: 0),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCategoryChip(String category, bool isDark) {
+    final isSelected = _selectedCategory == category;
+    return GestureDetector(
+      onTap: () => setState(() => _selectedCategory = category),
+      child: Container(
+        margin: EdgeInsets.only(right: 12.w),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+        decoration: BoxDecoration(
+          color: isSelected ? (isDark ? Colors.white : Colors.black) : (isDark ? AppColors.cardDark : Colors.white),
+          borderRadius: BorderRadius.circular(20.r),
+          border: Border.all(
+            color: isSelected ? (isDark ? Colors.white : Colors.black) : (isDark ? Colors.white10 : Colors.black12),
+          ),
+        ),
+        child: Text(
+          category,
+          style: AppTextStyles.labelMd.copyWith(
+            color: isSelected ? (isDark ? Colors.black : Colors.white) : (isDark ? Colors.white70 : Colors.black54),
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAsymmetricGrid(BuildContext context, bool isDark) {
+    return Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 3,
+              child: _buildBentoItem(_products[0], 280.h, isDark),
+            ),
+            SizedBox(width: 16.w),
+            Expanded(
+              flex: 2,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (!_showResults) ...[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Recent Searches', style: AppTextStyles.labelLg),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text('Clear All', style: AppTextStyles.labelSm.copyWith(color: Colors.grey)),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8.h),
-                    Wrap(
-                      spacing: 12.w,
-                      runSpacing: 12.h,
-                      children: _recentSearches.map((tag) => _buildSearchTag(tag, isDark)).toList(),
-                    ),
-                    SizedBox(height: 40.h),
-                    Text('Recommended for you', style: AppTextStyles.labelLg),
-                    SizedBox(height: 16.h),
-                    _buildRecommendationGrid(context),
-                  ] else ...[
-                    Text('Search Results', style: AppTextStyles.labelLg),
-                    SizedBox(height: 16.h),
-                    _buildResultsGrid(context),
-                  ],
-                  SizedBox(height: 40.h),
+                  _buildBentoItem(_products[1], 132.h, isDark),
+                  SizedBox(height: 16.h),
+                  _buildBentoItem(_products[2], 132.h, isDark),
                 ],
               ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+        SizedBox(height: 16.h),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  _buildBentoItem(_products[3], 132.h, isDark),
+                  SizedBox(height: 16.h),
+                  _buildBentoItem(_products[4], 132.h, isDark),
+                ],
+              ),
+            ),
+            SizedBox(width: 16.w),
+            Expanded(
+              flex: 3,
+              child: _buildBentoItem(_products[5], 280.h, isDark),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
-  Widget _buildSearchTag(String text, bool isDark) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : Colors.grey[100],
-        borderRadius: BorderRadius.circular(100.r),
+  Widget _buildBentoItem(Product product, double height, bool isDark) {
+    return GestureDetector(
+      onTap: () => context.push('/product/${product.id}'),
+      child: Container(
+        height: height,
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.cardDark : Colors.white,
+          borderRadius: BorderRadius.circular(24.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+                child: Image.network(
+                  product.imageUrl,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(12.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.labelMd.copyWith(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(height: 4.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '\$${product.price.toStringAsFixed(0)}',
+                        style: AppTextStyles.labelSm.copyWith(
+                          color: AppColors.onSurfaceVariant,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Icon(Icons.favorite_border, size: 16.sp, color: Colors.grey),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(text, style: AppTextStyles.bodyMd),
-          SizedBox(width: 8.w),
-          Icon(Icons.close, size: 14.sp, color: Colors.grey),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRecommendationGrid(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: _searchResults.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.62,
-        crossAxisSpacing: 16.w,
-        mainAxisSpacing: 16.h,
-      ),
-      itemBuilder: (context, index) {
-        return ProductCard(
-          product: _searchResults[index],
-          onTap: () => context.push('/product/${_searchResults[index].id}'),
-        );
-      },
-    );
-  }
-
-  Widget _buildResultsGrid(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: _searchResults.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.62,
-        crossAxisSpacing: 16.w,
-        mainAxisSpacing: 16.h,
-      ),
-      itemBuilder: (context, index) {
-        return ProductCard(
-          product: _searchResults[index],
-          onTap: () => context.push('/product/${_searchResults[index].id}'),
-        );
-      },
-    );
-  }
-
-  void _showFilterSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => const FilterSortScreen(),
     );
   }
 }

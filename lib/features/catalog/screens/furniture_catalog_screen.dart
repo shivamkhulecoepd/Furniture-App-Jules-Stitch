@@ -71,6 +71,18 @@ class FurnitureCatalogScreen extends StatelessWidget {
         ),
         const Spacer(),
         GestureDetector(
+          onTap: () => context.push(AppRouter.search),
+          child: Container(
+            padding: EdgeInsets.all(12.w),
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.surfaceDark : Colors.grey[100],
+              borderRadius: BorderRadius.circular(16.r),
+            ),
+            child: Icon(Icons.search, color: isDark ? Colors.white : Colors.black, size: 24.sp),
+          ),
+        ),
+        SizedBox(width: 12.w),
+        GestureDetector(
           onTap: () => context.push(AppRouter.cart),
           child: Container(
             padding: EdgeInsets.all(12.w),
@@ -198,7 +210,7 @@ class FurnitureCatalogScreen extends StatelessWidget {
               final cat = categories[index];
               final isAll = index == 0;
               return GestureDetector(
-                onTap: () => context.push('/category/${cat['name']}'),
+                onTap: () => context.push('/category/${cat["name"]}'),
                 child: Container(
                   width: 72.w,
                   margin: EdgeInsets.only(right: 16.w),
