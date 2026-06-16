@@ -23,6 +23,7 @@ import '../features/profile/screens/loyalty_rewards_screen.dart';
 import '../features/profile/screens/my_orders_screen.dart';
 import '../features/profile/screens/order_details_screen.dart';
 import '../features/profile/screens/help_center_screen.dart';
+import '../features/profile/screens/contact_us_screen.dart';
 import '../features/profile/screens/privacy_policy_screen.dart';
 
 class AppRouter {
@@ -50,6 +51,7 @@ class AppRouter {
   static const String myOrders = '/my-orders';
   static const String orderDetails = '/order-details/:id';
   static const String helpCenter = '/help-center';
+  static const String contactUs = '/contact-us';
   static const String privacy = '/privacy';
 
   // Aliases for compatibility
@@ -96,6 +98,7 @@ class AppRouter {
         builder: (context, state) => OrderDetailsScreen(orderId: state.pathParameters['id'] ?? 'TRX-8829'),
       ),
       GoRoute(path: helpCenter, builder: (context, state) => const HelpCenterScreen()),
+      GoRoute(path: contactUs, builder: (context, state) => const ContactUsScreen()),
       GoRoute(path: privacy, builder: (context, state) => const PrivacyPolicyScreen()),
     ],
   );

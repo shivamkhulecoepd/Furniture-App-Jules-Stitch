@@ -6,12 +6,13 @@ import '../../theme/app_text_styles.dart';
 class AppTextField extends StatelessWidget {
   final String label;
   final String? hint;
-  final String? hintText; // Added for compatibility
+  final String? hintText;
   final bool obscureText;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final Widget? suffixIcon;
   final String? Function(String?)? validator;
+  final int maxLines;
 
   const AppTextField({
     super.key,
@@ -23,6 +24,7 @@ class AppTextField extends StatelessWidget {
     this.keyboardType,
     this.suffixIcon,
     this.validator,
+    this.maxLines = 1,
   });
 
   @override
@@ -45,6 +47,7 @@ class AppTextField extends StatelessWidget {
           obscureText: obscureText,
           keyboardType: keyboardType,
           validator: validator,
+          maxLines: maxLines,
           style: AppTextStyles.bodyMd.copyWith(
             color: isDark ? AppColors.onSurfaceDark : AppColors.onSurface,
           ),

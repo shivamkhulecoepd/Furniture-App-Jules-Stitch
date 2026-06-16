@@ -29,7 +29,7 @@ class SettingsScreen extends StatelessWidget {
             SizedBox(height: 32.h),
             _buildSectionHeader('Support'),
             _buildSettingItem(isDark, 'Help Center', Icons.help_outline, () => context.push(AppRouter.helpCenter)),
-            _buildSettingItem(isDark, 'Contact Us', Icons.mail_outline, () {}),
+            _buildSettingItem(isDark, 'Contact Us', Icons.mail_outline, () => context.push(AppRouter.contactUs)),
             _buildSettingItem(isDark, 'Terms of Service', Icons.description, () => context.push(AppRouter.privacy)),
             _buildSettingItem(isDark, 'Privacy Policy', Icons.privacy_tip, () => context.push(AppRouter.privacy)),
             SizedBox(height: 32.h),
