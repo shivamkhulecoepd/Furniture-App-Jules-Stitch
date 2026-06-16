@@ -43,6 +43,10 @@ class AppColors {
   static const Color inverseOnSurface = Color(0xFFF1F0F5);
   static const Color inversePrimary = Color(0xFFC8C6C5);
 
+  // HTML Specific Tokens
+  static const Color primaryFixed = Color(0xFFE5E2E1);
+  static const Color onPrimaryFixed = Color(0xFF1C1B1B);
+
   // Custom Aliases
   static const Color backgroundLight = background;
   static const Color backgroundDark = Color(0xFF1A1B1F);

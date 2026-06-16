@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -22,16 +23,23 @@ class ProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Stack(
-              children: [
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceContainer,
-                    borderRadius: BorderRadius.circular(32.r),
+          AspectRatio(
+            aspectRatio: 3 / 4,
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.surfaceContainer,
+                borderRadius: BorderRadius.circular(32.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.04),
+                    blurRadius: 30,
+                    offset: const Offset(0, 10),
                   ),
-                  child: ClipRRect(
+                ],
+              ),
+              child: Stack(
+                children: [
+                  ClipRRect(
                     borderRadius: BorderRadius.circular(32.r),
                     child: CachedNetworkImage(
                       imageUrl: product.imageUrl,
@@ -40,24 +48,30 @@ class ProductCard extends StatelessWidget {
                       height: double.infinity,
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 12.h,
-                  right: 12.w,
-                  child: Container(
-                    padding: EdgeInsets.all(8.w),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.8),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.favorite_border_rounded,
-                      size: 18.sp,
-                      color: Colors.black,
+                  Positioned(
+                    top: 12.h,
+                    right: 12.w,
+                    child: ClipOval(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                        child: Container(
+                          width: 32.w,
+                          height: 32.h,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.7),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.favorite_rounded,
+                            size: 20.sp,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           SizedBox(height: 12.h),
@@ -68,13 +82,13 @@ class ProductCard extends StatelessWidget {
               children: [
                 Text(
                   product.name,
-                  style: AppTextStyles.labelLg,
+                  style: AppTextStyles.bodyLg.copyWith(fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   product.description,
-                  style: AppTextStyles.labelSm.copyWith(color: Colors.grey),
+                  style: AppTextStyles.labelMd.copyWith(color: AppColors.onSurfaceVariant),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -84,17 +98,21 @@ class ProductCard extends StatelessWidget {
                   children: [
                     Text(
                       '\$${product.price.toStringAsFixed(2)}',
-                      style: AppTextStyles.labelLg.copyWith(fontWeight: FontWeight.bold),
+                      style: AppTextStyles.bodyLg.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF4F3F8),
-                        borderRadius: BorderRadius.circular(8.r),
+                        color: AppColors.primaryContainer,
+                        borderRadius: BorderRadius.circular(6.r),
                       ),
                       child: Text(
                         '4.8 ★',
-                        style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.onPrimaryContainer,
+                        ),
                       ),
                     ),
                   ],
