@@ -132,6 +132,7 @@ class ProfileScreen extends StatelessWidget {
       children: [
         _buildMenuItem(isDark, Icons.person_outline_rounded, 'Edit Profile', () => context.push(AppRouter.editProfile)),
         _buildMenuItem(isDark, Icons.shopping_bag_outlined, 'My Orders', () => context.push(AppRouter.myOrders)),
+        _buildMenuItem(isDark, Icons.history_rounded, 'Orders History', () => context.push(AppRouter.ordersHistory)),
         _buildMenuItem(isDark, Icons.location_on_outlined, 'Shipping Addresses', () => context.push(AppRouter.addresses)),
         _buildMenuItem(isDark, Icons.payment_outlined, 'Payment Methods', () => context.push(AppRouter.payments)),
         _buildMenuItem(isDark, Icons.notifications_none_rounded, 'Notifications', () => context.push(AppRouter.notifications)),

@@ -1,3 +1,4 @@
+import 'package:furniture_app_jules_stitch/features/profile/screens/orders_history_screen.dart';
 import 'package:go_router/go_router.dart';
 import '../features/auth/screens/welcome_screen.dart';
 import '../features/auth/screens/login_screen.dart';
@@ -49,6 +50,7 @@ class AppRouter {
   static const String notifications = '/notifications';
   static const String loyalty = '/loyalty';
   static const String myOrders = '/my-orders';
+  static const String ordersHistory = '/orders-history';
   static const String orderDetails = '/order-details/:id';
   static const String helpCenter = '/help-center';
   static const String contactUs = '/contact-us';
@@ -63,7 +65,7 @@ class AppRouter {
   static const String orderSuccess = success;
 
   static final GoRouter router = GoRouter(
-    initialLocation: welcome,
+    initialLocation: catalog,
     routes: [
       GoRoute(path: welcome, builder: (context, state) => const WelcomeScreen()),
       GoRoute(path: login, builder: (context, state) => const LoginScreen()),
@@ -93,6 +95,7 @@ class AppRouter {
       GoRoute(path: notifications, builder: (context, state) => const NotificationsScreen()),
       GoRoute(path: loyalty, builder: (context, state) => const LoyaltyRewardsScreen()),
       GoRoute(path: myOrders, builder: (context, state) => const MyOrdersScreen()),
+      GoRoute(path: ordersHistory, builder: (context, state) => const OrdersHistoryScreen()),
       GoRoute(
         path: orderDetails,
         builder: (context, state) => OrderDetailsScreen(orderId: state.pathParameters['id'] ?? 'TRX-8829'),
