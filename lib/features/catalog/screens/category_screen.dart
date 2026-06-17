@@ -9,11 +9,15 @@ import '../../../models/product.dart';
 import '../widgets/product_card.dart';
 import 'filter_sort_screen.dart';
 
-class CategoryScreen extends StatelessWidget {
+class CategoryScreen extends StatefulWidget {
   final String categoryName;
-
   const CategoryScreen({super.key, required this.categoryName});
 
+  @override
+  State<CategoryScreen> createState() => _CategoryScreenState();
+}
+
+class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     final products = [
@@ -22,7 +26,8 @@ class CategoryScreen extends StatelessWidget {
         name: 'Sabra Chair',
         description: 'Modern minimalist chair',
         price: 240.0,
-        imageUrl: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=2864&auto=format&fit=crop',
+        imageUrl:
+            'https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=2864&auto=format&fit=crop',
         category: 'Chairs',
       ),
       const Product(
@@ -30,7 +35,8 @@ class CategoryScreen extends StatelessWidget {
         name: 'Nordic Lounge',
         description: 'Classic nordic design',
         price: 310.0,
-        imageUrl: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?q=80&w=3870&auto=format&fit=crop',
+        imageUrl:
+            'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?q=80&w=3870&auto=format&fit=crop',
         category: 'Chairs',
       ),
       const Product(
@@ -38,7 +44,8 @@ class CategoryScreen extends StatelessWidget {
         name: 'Eames Replica',
         description: 'Mid-century modern',
         price: 180.0,
-        imageUrl: 'https://images.unsplash.com/photo-1580480055273-228ff5388ef8?q=80&w=3870&auto=format&fit=crop',
+        imageUrl:
+            'https://images.unsplash.com/photo-1580480055273-228ff5388ef8?q=80&w=3870&auto=format&fit=crop',
         category: 'Chairs',
       ),
       const Product(
@@ -46,24 +53,29 @@ class CategoryScreen extends StatelessWidget {
         name: 'Woven Stool',
         description: 'Natural texture',
         price: 95.0,
-        imageUrl: 'https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=3870&auto=format&fit=crop',
+        imageUrl:
+            'https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=3870&auto=format&fit=crop',
         category: 'Chairs',
       ),
     ];
 
     return Scaffold(
       appBar: AppAppBar(
-        title: categoryName,
+        title: widget.categoryName,
         actions: [
           IconButton(
-            icon: Icon(Icons.tune_rounded, color: AppColors.primary, size: 24.sp),
+            icon: Icon(
+              Icons.tune_rounded,
+              color: AppColors.primary,
+              size: 24.sp,
+            ),
             onPressed: () => _showFilterSheet(context),
           ),
           SizedBox(width: 8.w),
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(AppSpacing.containerPadding),
+        padding: EdgeInsets.symmetric(horizontal: AppSpacing.containerPadding),
         child: Column(
           children: [
             _buildSortInfo(),
@@ -74,7 +86,7 @@ class CategoryScreen extends StatelessWidget {
               itemCount: products.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.62,
+                childAspectRatio: 0.52,
                 crossAxisSpacing: 16.w,
                 mainAxisSpacing: 24.h,
               ),
@@ -97,7 +109,10 @@ class CategoryScreen extends StatelessWidget {
       children: [
         Text(
           '24 Items found',
-          style: AppTextStyles.bodyMd.copyWith(fontWeight: FontWeight.w600, color: AppColors.onSurface),
+          style: AppTextStyles.bodyMd.copyWith(
+            fontWeight: FontWeight.w600,
+            color: AppColors.onSurface,
+          ),
         ),
         Row(
           children: [
@@ -109,7 +124,11 @@ class CategoryScreen extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            Icon(Icons.keyboard_arrow_down_rounded, size: 20.sp, color: AppColors.primary),
+            Icon(
+              Icons.keyboard_arrow_down_rounded,
+              size: 20.sp,
+              color: AppColors.primary,
+            ),
           ],
         ),
       ],

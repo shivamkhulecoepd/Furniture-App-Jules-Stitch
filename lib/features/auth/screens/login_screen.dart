@@ -3,30 +3,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_text_field.dart';
-import '../../../shared/widgets/app_app_bar.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../routes/app_router.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppAppBar(
-        title: 'Modern Furniture',
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_bag_outlined, color: Colors.black, size: 24.sp),
-            onPressed: () => context.push(AppRouter.cart),
-          ),
-          SizedBox(width: 8.w),
-        ],
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w),
+          padding: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
           child: Column(
             children: [
               SizedBox(height: 16.h),
@@ -53,7 +47,11 @@ class LoginScreen extends StatelessWidget {
               const AppTextField(
                 label: 'EMAIL ADDRESS',
                 hint: 'name@example.com',
-                suffixIcon: Icon(Icons.mail_outline, color: Colors.grey, size: 20),
+                suffixIcon: Icon(
+                  Icons.mail_outline,
+                  color: Colors.grey,
+                  size: 20,
+                ),
               ),
               SizedBox(height: 24.h),
               Stack(
@@ -62,7 +60,11 @@ class LoginScreen extends StatelessWidget {
                     label: 'PASSWORD',
                     hint: 'Enter your password',
                     obscureText: true,
-                    suffixIcon: Icon(Icons.visibility_off_outlined, color: Colors.grey, size: 20),
+                    suffixIcon: Icon(
+                      Icons.visibility_off_outlined,
+                      color: Colors.grey,
+                      size: 20,
+                    ),
                   ),
                   Positioned(
                     right: 0,
@@ -71,7 +73,9 @@ class LoginScreen extends StatelessWidget {
                       onTap: () => context.push(AppRouter.forgotPassword),
                       child: Text(
                         'Forgot Password?',
-                        style: AppTextStyles.labelSm.copyWith(color: Colors.black),
+                        style: AppTextStyles.labelSm.copyWith(
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
@@ -80,7 +84,7 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: 40.h),
               AppButton(
                 text: 'Login',
-                onPressed: () => context.go(AppRouter.catalog),
+                onPressed: () => context.go(AppRouter.otp),
               ),
               SizedBox(height: 24.h),
               _buildDivider(),
@@ -95,7 +99,9 @@ class LoginScreen extends StatelessWidget {
                     onTap: () => context.push(AppRouter.register),
                     child: Text(
                       'Register',
-                      style: AppTextStyles.labelSm.copyWith(fontWeight: FontWeight.bold),
+                      style: AppTextStyles.labelSm.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -103,7 +109,10 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: 48.h),
               Text(
                 '© 2024 Modern Furniture Inc. All rights reserved.',
-                style: AppTextStyles.labelSm.copyWith(color: Colors.grey[400], fontSize: 10.sp),
+                style: AppTextStyles.labelSm.copyWith(
+                  color: Colors.grey[400],
+                  fontSize: 10.sp,
+                ),
               ),
               SizedBox(height: 16.h),
             ],
@@ -119,7 +128,10 @@ class LoginScreen extends StatelessWidget {
         const Expanded(child: Divider()),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Text('OR', style: AppTextStyles.labelSm.copyWith(color: Colors.grey)),
+          child: Text(
+            'OR',
+            style: AppTextStyles.labelSm.copyWith(color: Colors.grey),
+          ),
         ),
         const Expanded(child: Divider()),
       ],
@@ -135,19 +147,17 @@ class LoginScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(32.r),
       ),
       child: Row(
+        spacing: 8.w,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'GOOGLE ',
-            style: TextStyle(
-              fontSize: 20.sp,
-              fontWeight: FontWeight.w300,
-              letterSpacing: 2,
-            ),
+          Image.asset(
+            'assets/icons/google_logo.png',
+            width: 24.w,
+            height: 24.h,
           ),
           Text(
             'Continue with Google',
-            style: AppTextStyles.labelMd.copyWith(color: Colors.black),
+            style: AppTextStyles.bodyMd.copyWith(color: Colors.black),
           ),
         ],
       ),

@@ -9,46 +9,43 @@ import '../../../models/product.dart';
 import 'filter_sort_screen.dart';
 import '../../../shared/widgets/app_bottom_nav.dart';
 
-class FurnitureCatalogScreen extends StatelessWidget {
+class FurnitureCatalogScreen extends StatefulWidget {
   const FurnitureCatalogScreen({super.key});
 
+  @override
+  State<FurnitureCatalogScreen> createState() => _FurnitureCatalogScreenState();
+}
+
+class _FurnitureCatalogScreenState extends State<FurnitureCatalogScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      backgroundColor: isDark
+          ? AppColors.backgroundDark
+          : AppColors.backgroundLight,
       body: SafeArea(
-        bottom: false,
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              padding: EdgeInsets.all(24.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildHeader(context, isDark),
-                  SizedBox(height: 24.h),
-                  _buildFeaturedBanner(context),
-                  SizedBox(height: 32.h),
-                  _buildCategories(context, isDark),
-                  SizedBox(height: 32.h),
-                  Text('Popular Furniture', style: AppTextStyles.h2),
-                  SizedBox(height: 16.h),
-                  _buildProductGrid(context),
-                  SizedBox(height: 100.h), // Space for bottom nav
-                ],
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: const AppBottomNav(currentIndex: 0),
-            ),
-          ],
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(left: 20.w, right: 20.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(context, isDark),
+              SizedBox(height: 24.h),
+              _buildFeaturedBanner(context),
+              SizedBox(height: 32.h),
+              _buildCategories(context, isDark),
+              SizedBox(height: 12.h),
+              Text('Popular Furniture', style: AppTextStyles.h2),
+              SizedBox(height: 16.h),
+              _buildProductGrid(context),
+              SizedBox(height: 30.h), // Space for bottom nav
+            ],
+          ),
         ),
       ),
+      bottomNavigationBar: AppBottomNav(currentIndex: 0),
     );
   }
 
@@ -58,13 +55,20 @@ class FurnitureCatalogScreen extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Delivery to', style: AppTextStyles.bodySm.copyWith(color: Colors.grey)),
+            Text(
+              'Delivery to',
+              style: AppTextStyles.bodySm.copyWith(color: Colors.grey),
+            ),
             Row(
+              spacing: 4.w,
               children: [
                 Icon(Icons.location_on, color: AppColors.primary, size: 14.sp),
-                SizedBox(width: 4.w),
                 Text('San Francisco, CA', style: AppTextStyles.labelMd),
-                Icon(Icons.keyboard_arrow_down, color: Colors.grey, size: 18.sp),
+                Icon(
+                  Icons.keyboard_arrow_down,
+                  color: Colors.grey,
+                  size: 18.sp,
+                ),
               ],
             ),
           ],
@@ -78,10 +82,14 @@ class FurnitureCatalogScreen extends StatelessWidget {
               color: isDark ? AppColors.surfaceDark : Colors.grey[100],
               borderRadius: BorderRadius.circular(16.r),
             ),
-            child: Icon(Icons.search, color: isDark ? Colors.white : Colors.black, size: 24.sp),
+            child: Icon(
+              Icons.search,
+              color: isDark ? Colors.white : Colors.black,
+              size: 24.sp,
+            ),
           ),
         ),
-        SizedBox(width: 12.w),
+        SizedBox(width: 10.w),
         GestureDetector(
           onTap: () => context.push(AppRouter.cart),
           child: Container(
@@ -93,7 +101,11 @@ class FurnitureCatalogScreen extends StatelessWidget {
             child: Badge(
               label: const Text('3'),
               backgroundColor: AppColors.primary,
-              child: Icon(Icons.shopping_bag_outlined, color: isDark ? Colors.white : Colors.black, size: 24.sp),
+              child: Icon(
+                Icons.shopping_bag_outlined,
+                color: isDark ? Colors.white : Colors.black,
+                size: 24.sp,
+              ),
             ),
           ),
         ),
@@ -112,14 +124,24 @@ class FurnitureCatalogScreen extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: Stack(
         children: [
+          Positioned.fill(
+            child: Image.network(
+              'https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=1000&auto=format&fit=crop',
+              height: 120.h,
+              fit: BoxFit.cover,
+            ),
+          ),
           Padding(
-            padding: EdgeInsets.all(24.w),
+            padding: EdgeInsets.all(20.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 4.h,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.primaryFixed,
                     borderRadius: BorderRadius.circular(100.r),
@@ -137,34 +159,40 @@ class FurnitureCatalogScreen extends StatelessWidget {
                 SizedBox(height: 12.h),
                 Text(
                   'Sabra Chair 581n',
-                  style: AppTextStyles.h3.copyWith(color: AppColors.onPrimary, fontWeight: FontWeight.bold),
+                  style: AppTextStyles.h3.copyWith(
+                    color: AppColors.onPrimary,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   'Limited edition collection',
-                  style: AppTextStyles.bodyMd.copyWith(color: AppColors.onPrimary.withValues(alpha: 0.7)),
+                  style: AppTextStyles.bodyMd.copyWith(
+                    color: AppColors.onPrimary.withValues(alpha: 0.7),
+                  ),
                 ),
-                SizedBox(height: 16.h),
+                const Spacer(),
                 ElevatedButton(
                   onPressed: () => context.push('/category/Chairs'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.r)),
-                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100.r),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.w,
+                      vertical: 8.h,
+                    ),
                     elevation: 0,
                   ),
-                  child: Text('View Shop', style: AppTextStyles.labelMd.copyWith(fontWeight: FontWeight.bold)),
+                  child: Text(
+                    'View Shop',
+                    style: AppTextStyles.labelMd.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ],
-            ),
-          ),
-          Positioned(
-            right: -20.w,
-            bottom: -20.h,
-            child: Image.network(
-              'https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=1000&auto=format&fit=crop',
-              height: 220.h,
-              fit: BoxFit.contain,
             ),
           ),
         ],
@@ -219,12 +247,18 @@ class FurnitureCatalogScreen extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.all(16.w),
                         decoration: BoxDecoration(
-                          color: isAll ? Colors.black : (isDark ? AppColors.surfaceDark : Colors.grey[100]),
+                          color: isAll
+                              ? Colors.black
+                              : (isDark
+                                    ? AppColors.surfaceDark
+                                    : Colors.grey[100]),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
                           cat['icon'] as IconData,
-                          color: isAll ? Colors.white : (isDark ? Colors.white70 : Colors.black54),
+                          color: isAll
+                              ? Colors.white
+                              : (isDark ? Colors.white70 : Colors.black54),
                           size: 24.sp,
                         ),
                       ),
@@ -233,7 +267,9 @@ class FurnitureCatalogScreen extends StatelessWidget {
                         cat['name'] as String,
                         style: AppTextStyles.labelSm.copyWith(
                           color: isAll ? Colors.black : Colors.grey,
-                          fontWeight: isAll ? FontWeight.bold : FontWeight.normal,
+                          fontWeight: isAll
+                              ? FontWeight.bold
+                              : FontWeight.normal,
                         ),
                       ),
                     ],
@@ -254,16 +290,131 @@ class FurnitureCatalogScreen extends StatelessWidget {
         name: 'Sabra Chair',
         description: 'Modern minimalist chair',
         price: 240.0,
-        imageUrl: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?q=80&w=1000&auto=format&fit=crop',
+        rating: 4.8,
+        isFavorite: true,
+        imageUrl:
+            'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?q=80&w=1000&auto=format&fit=crop',
         category: 'Chairs',
       ),
+
       const Product(
         id: '2',
         name: 'Sleepover Arm',
         description: 'Comfortable armchair',
         price: 160.0,
-        imageUrl: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop',
+        rating: 4.5,
+        isFavorite: false,
+        imageUrl:
+            'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop',
         category: 'Chairs',
+      ),
+
+      const Product(
+        id: '3',
+        name: 'Nordic Lounge Chair',
+        description: 'Scandinavian style lounge chair',
+        price: 320.0,
+        rating: 4.9,
+        isFavorite: true,
+        imageUrl:
+            'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1000&auto=format&fit=crop',
+        category: 'Chairs',
+      ),
+
+      const Product(
+        id: '4',
+        name: 'Oslo Sofa',
+        description: '3-seater premium fabric sofa',
+        price: 899.0,
+        rating: 4.7,
+        isFavorite: true,
+        imageUrl:
+            'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=1000&auto=format&fit=crop',
+        category: 'Sofas',
+      ),
+
+      const Product(
+        id: '5',
+        name: 'Milano Sectional',
+        description: 'Luxury sectional sofa',
+        price: 1299.0,
+        rating: 5.0,
+        isFavorite: true,
+        imageUrl:
+            'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=1000&auto=format&fit=crop',
+        category: 'Sofas',
+      ),
+
+      const Product(
+        id: '6',
+        name: 'Oak Coffee Table',
+        description: 'Solid oak wood coffee table',
+        price: 220.0,
+        rating: 4.4,
+        isFavorite: false,
+        imageUrl:
+            'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?q=80&w=1000&auto=format&fit=crop',
+        category: 'Tables',
+      ),
+
+      const Product(
+        id: '7',
+        name: 'Round Dining Table',
+        description: 'Elegant dining table for 4',
+        price: 499.0,
+        rating: 4.8,
+        isFavorite: true,
+        imageUrl:
+            'https://images.unsplash.com/photo-1617104551722-3b2d51366400?q=80&w=1000&auto=format&fit=crop',
+        category: 'Tables',
+      ),
+
+      const Product(
+        id: '8',
+        name: 'King Size Bed',
+        description: 'Modern upholstered bed frame',
+        price: 1099.0,
+        rating: 4.9,
+        isFavorite: true,
+        imageUrl:
+            'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+        category: 'Beds',
+      ),
+
+      const Product(
+        id: '9',
+        name: 'Storage Cabinet',
+        description: 'Multi-purpose wooden cabinet',
+        price: 450.0,
+        rating: 4.3,
+        isFavorite: false,
+        imageUrl:
+            'https://images.unsplash.com/photo-1484101403633-562f891dc89a?q=80&w=1000&auto=format&fit=crop',
+        category: 'Storage',
+      ),
+
+      const Product(
+        id: '10',
+        name: 'Bookshelf Pro',
+        description: '5-tier open bookshelf',
+        price: 279.0,
+        rating: 4.6,
+        isFavorite: true,
+        imageUrl:
+            'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1000&auto=format&fit=crop',
+        category: 'Storage',
+      ),
+
+      const Product(
+        id: '11',
+        name: 'Arc Floor Lamp',
+        description: 'Modern floor lamp with warm light',
+        price: 189.0,
+        rating: 4.7,
+        isFavorite: false,
+        imageUrl:
+            'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=1000&auto=format&fit=crop',
+        category: 'Lighting',
       ),
     ];
 
@@ -273,7 +424,7 @@ class FurnitureCatalogScreen extends StatelessWidget {
       itemCount: products.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.62,
+        childAspectRatio: 0.52,
         crossAxisSpacing: 16.w,
         mainAxisSpacing: 24.h,
       ),
