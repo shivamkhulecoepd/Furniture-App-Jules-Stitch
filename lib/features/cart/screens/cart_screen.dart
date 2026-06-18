@@ -208,6 +208,7 @@ class _CartScreenState extends State<CartScreen> {
           topLeft: Radius.circular(32.r),
           topRight: Radius.circular(32.r),
         ),
+        border: Border(top: BorderSide(color: Colors.grey[300]!)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

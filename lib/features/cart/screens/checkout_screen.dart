@@ -17,7 +17,7 @@ class CheckoutScreen extends StatelessWidget {
     return Scaffold(
       appBar: const AppAppBar(title: 'Checkout'),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(AppSpacing.containerPadding),
+        padding: EdgeInsets.all(AppSpacing.md.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

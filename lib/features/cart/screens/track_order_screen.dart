@@ -26,7 +26,7 @@ class TrackOrderScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w),
+          padding: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -38,7 +38,7 @@ class TrackOrderScreen extends StatelessWidget {
               Text('ORDER TIMELINE', style: AppTextStyles.labelSm.copyWith(color: Colors.grey)),
               SizedBox(height: 16.h),
               _buildTimeline(isDark),
-              SizedBox(height: 32.h),
+              SizedBox(height: 10.h),
               _buildAddressCard(isDark),
               SizedBox(height: 40.h),
               _buildContactButton(),

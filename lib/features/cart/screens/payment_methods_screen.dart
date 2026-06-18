@@ -20,7 +20,7 @@ class PaymentMethodsScreen extends StatelessWidget {
         children: [
           Expanded(
             child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w, vertical: 16.h),
+              padding: EdgeInsets.symmetric(horizontal: AppSpacing.md.w, vertical: 16.h),
               children: [
                 _buildPaymentCard(
                   isDark,
@@ -47,13 +47,12 @@ class PaymentMethodsScreen extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(AppSpacing.lg.w),
-            child: _buildAddButton(),
-          ),
-          SizedBox(height: 20.h),
         ],
       ),
+      bottomNavigationBar:  Padding(
+            padding: EdgeInsets.all(AppSpacing.md.w),
+            child: _buildAddButton(),
+          ),
     );
   }
 

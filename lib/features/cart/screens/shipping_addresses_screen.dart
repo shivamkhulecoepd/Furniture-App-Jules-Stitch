@@ -14,13 +14,18 @@ class ShippingAddressesScreen extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      backgroundColor: isDark
+          ? AppColors.backgroundDark
+          : AppColors.backgroundLight,
       appBar: AppAppBar(
         title: 'Saved Addresses',
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.shopping_bag_outlined, color: isDark ? Colors.white : Colors.black),
+            icon: Icon(
+              Icons.shopping_bag_outlined,
+              color: isDark ? Colors.white : Colors.black,
+            ),
           ),
         ],
       ),
@@ -28,12 +33,16 @@ class ShippingAddressesScreen extends StatelessWidget {
         children: [
           Expanded(
             child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w, vertical: 16.h),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppSpacing.md.w,
+                vertical: 16.h,
+              ),
               children: [
                 _buildAddressCard(
                   isDark,
                   name: 'Alexander Graham',
-                  address: '4829 West Side Avenue\nSuite 302, Green District\nSan Francisco, CA 94105',
+                  address:
+                      '4829 West Side Avenue\nSuite 302, Green District\nSan Francisco, CA 94105',
                   phone: '+1 (555) 012-3456',
                   isDefault: true,
                 ),
@@ -41,25 +50,26 @@ class ShippingAddressesScreen extends StatelessWidget {
                 _buildAddressCard(
                   isDark,
                   name: 'Office - Design Studio',
-                  address: '901 Mission Street\nThe Hub, 4th Floor\nSan Francisco, CA 94103',
+                  address:
+                      '901 Mission Street\nThe Hub, 4th Floor\nSan Francisco, CA 94103',
                   phone: '+1 (555) 987-6543',
                 ),
                 SizedBox(height: 16.h),
                 _buildAddressCard(
                   isDark,
                   name: 'Vacation Home',
-                  address: '120 High Ridge Road\nAspen Heights\nAspen, CO 81611',
+                  address:
+                      '120 High Ridge Road\nAspen Heights\nAspen, CO 81611',
                   phone: '+1 (555) 222-3333',
                 ),
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(AppSpacing.lg.w),
-            child: _buildAddButton(),
-          ),
-          SizedBox(height: 20.h),
         ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(AppSpacing.md.w),
+        child: _buildAddButton(),
       ),
     );
   }
@@ -87,14 +97,21 @@ class ShippingAddressesScreen extends StatelessWidget {
               Text(name, style: AppTextStyles.labelLg),
               if (isDefault)
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 4.h,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: Text(
                     'DEFAULT',
-                    style: TextStyle(color: Colors.white, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
             ],
@@ -102,25 +119,39 @@ class ShippingAddressesScreen extends StatelessWidget {
           SizedBox(height: 12.h),
           Text(
             address,
-            style: AppTextStyles.bodyMd.copyWith(color: Colors.grey, height: 1.5),
+            style: AppTextStyles.bodyMd.copyWith(
+              color: Colors.grey,
+              height: 1.5,
+            ),
           ),
           SizedBox(height: 16.h),
           Row(
             children: [
               Icon(Icons.phone_outlined, size: 16.sp, color: Colors.grey),
               SizedBox(width: 8.w),
-              Text(phone, style: AppTextStyles.bodySm.copyWith(color: Colors.grey)),
+              Text(
+                phone,
+                style: AppTextStyles.bodySm.copyWith(color: Colors.grey),
+              ),
               const Spacer(),
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.edit_outlined, size: 20.sp, color: Colors.grey[700]),
+                icon: Icon(
+                  Icons.edit_outlined,
+                  size: 20.sp,
+                  color: Colors.grey[700],
+                ),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
               ),
               SizedBox(width: 16.w),
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.delete_outline, size: 20.sp, color: Colors.red[300]),
+                icon: Icon(
+                  Icons.delete_outline,
+                  size: 20.sp,
+                  color: Colors.red[300],
+                ),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
               ),
@@ -137,11 +168,16 @@ class ShippingAddressesScreen extends StatelessWidget {
       child: ElevatedButton.icon(
         onPressed: () {},
         icon: const Icon(Icons.add, color: Colors.white),
-        label: const Text('Add New Address', style: TextStyle(color: Colors.white)),
+        label: const Text(
+          'Add New Address',
+          style: TextStyle(color: Colors.white),
+        ),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.black,
           padding: EdgeInsets.symmetric(vertical: 16.h),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.r)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(32.r),
+          ),
           elevation: 0,
         ),
       ),

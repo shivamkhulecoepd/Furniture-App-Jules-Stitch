@@ -7,7 +7,6 @@ import '../../../routes/app_router.dart';
 import '../widgets/product_card.dart';
 import '../../../models/product.dart';
 import 'filter_sort_screen.dart';
-import '../../../shared/widgets/app_bottom_nav.dart';
 
 class FurnitureCatalogScreen extends StatefulWidget {
   const FurnitureCatalogScreen({super.key});
@@ -45,7 +44,6 @@ class _FurnitureCatalogScreenState extends State<FurnitureCatalogScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: AppBottomNav(currentIndex: 0),
     );
   }
 

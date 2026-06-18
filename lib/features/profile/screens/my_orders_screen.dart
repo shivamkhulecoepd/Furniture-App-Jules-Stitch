@@ -47,7 +47,7 @@ class MyOrdersScreen extends StatelessWidget {
 
   Widget _buildOrdersList(BuildContext context, bool isDark, String status) {
     return ListView.separated(
-      padding: EdgeInsets.all(AppSpacing.lg.w),
+      padding: EdgeInsets.all(AppSpacing.md.w),
       itemCount: status == 'active' ? 2 : 5,
       separatorBuilder: (context, index) => SizedBox(height: 16.h),
       itemBuilder: (context, index) => _buildOrderCard(context, isDark, status),

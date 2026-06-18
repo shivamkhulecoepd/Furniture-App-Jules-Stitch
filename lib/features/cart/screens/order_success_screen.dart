@@ -18,7 +18,7 @@ class OrderSuccessScreen extends StatelessWidget {
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w),
+          padding: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

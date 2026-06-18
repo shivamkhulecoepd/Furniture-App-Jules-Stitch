@@ -25,7 +25,7 @@ class _FilterSortScreenState extends State<FilterSortScreen> {
         color: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
         borderRadius: BorderRadius.vertical(top: Radius.circular(32.r)),
       ),
-      padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w),
+      padding: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -211,25 +211,25 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               child: Row(
                 children: [
-                  GestureDetector(
-                    onTap: () => context.pop(),
-                    child: Container(
-                      padding: EdgeInsets.all(12.w),
-                      decoration: BoxDecoration(
-                        color: isDark ? AppColors.cardDark : Colors.white,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: isDark ? Colors.white10 : Colors.black12,
-                        ),
-                      ),
-                      child: Icon(
-                        Icons.arrow_back,
-                        size: 20.sp,
-                        color: isDark ? Colors.white : Colors.black,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 12.w),
+                  // GestureDetector(
+                  //   onTap: () => context.pop(),
+                  //   child: Container(
+                  //     padding: EdgeInsets.all(12.w),
+                  //     decoration: BoxDecoration(
+                  //       color: isDark ? AppColors.cardDark : Colors.white,
+                  //       shape: BoxShape.circle,
+                  //       border: Border.all(
+                  //         color: isDark ? Colors.white10 : Colors.black12,
+                  //       ),
+                  //     ),
+                  //     child: Icon(
+                  //       Icons.arrow_back,
+                  //       size: 20.sp,
+                  //       color: isDark ? Colors.white : Colors.black,
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(width: 12.w),
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -283,7 +283,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 24.h),
+              padding: EdgeInsets.symmetric(vertical: 20.h),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
