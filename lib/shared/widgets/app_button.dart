@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../theme/app_text_styles.dart';
 
-enum AppButtonVariant { filled, outline, ghost, error }
+enum AppButtonVariant { filled, outline, ghost }
 
 class AppButton extends StatelessWidget {
   final String text;
@@ -10,7 +10,6 @@ class AppButton extends StatelessWidget {
   final AppButtonVariant variant;
   final bool isLoading;
   final IconData? icon;
-  final Color? color;
 
   const AppButton({
     super.key,
@@ -18,7 +17,7 @@ class AppButton extends StatelessWidget {
     required this.onPressed,
     this.variant = AppButtonVariant.filled,
     this.isLoading = false,
-    this.icon, this.color,
+    this.icon,
   });
 
   @override
@@ -53,14 +52,6 @@ class AppButton extends StatelessWidget {
         );
         textStyle = AppTextStyles.button.copyWith(color: isDark ? Colors.white : Colors.black);
         break;
-      case AppButtonVariant.error:
-        style = OutlinedButton.styleFrom(
-          side: BorderSide(color: isDark ? Colors.white24 : Colors.black12),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.r)),
-          padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 24.w),
-        );
-        textStyle = AppTextStyles.button.copyWith(color: color);
-        break;
     }
 
     Widget content = isLoading
@@ -88,7 +79,7 @@ class AppButton extends StatelessWidget {
 
     return SizedBox(
       width: double.infinity,
-      child: (variant == AppButtonVariant.outline || variant == AppButtonVariant.error)
+      child: variant == AppButtonVariant.outline
           ? OutlinedButton(onPressed: isLoading ? null : onPressed, style: style, child: content)
           : variant == AppButtonVariant.ghost
               ? TextButton(onPressed: isLoading ? null : onPressed, style: style, child: content)

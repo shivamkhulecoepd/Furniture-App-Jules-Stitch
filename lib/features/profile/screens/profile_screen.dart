@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/app_app_bar.dart';
 import '../../../shared/widgets/app_button.dart';
+import '../../../shared/widgets/app_bottom_nav.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../theme/app_colors.dart';
@@ -28,25 +29,35 @@ class ProfileScreen extends StatelessWidget {
           SizedBox(width: 8.w),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(AppSpacing.md.w),
-        child: Column(
-          children: [
-            _buildProfileHeader(isDark),
-            SizedBox(height: 32.h),
-            _buildLoyaltyCard(context, isDark),
-            SizedBox(height: 32.h),
-            _buildMenuSection(context, isDark),
-            SizedBox(height: 38.h),
-            AppButton(
-              text: 'Logout',
-              variant: AppButtonVariant.error,
-              onPressed: () => context.go(AppRouter.login),
-              color: Colors.red,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            padding: EdgeInsets.all(AppSpacing.lg.w),
+            child: Column(
+              children: [
+                SizedBox(height: 16.h),
+                _buildProfileHeader(isDark),
+                SizedBox(height: 32.h),
+                _buildLoyaltyCard(context, isDark),
+                SizedBox(height: 32.h),
+                _buildMenuSection(context, isDark),
+                SizedBox(height: 48.h),
+                AppButton(
+                  text: 'Logout',
+                  variant: AppButtonVariant.outline,
+                  onPressed: () => context.go(AppRouter.login),
+                ),
+                SizedBox(height: 120.h),
+              ],
             ),
-            SizedBox(height: 24.h),
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: const AppBottomNav(currentIndex: 3),
+          ),
+        ],
       ),
     );
   }
@@ -84,23 +95,33 @@ class ProfileScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () => context.push(AppRouter.loyalty),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.h),
+        padding: EdgeInsets.all(20.w),
         decoration: BoxDecoration(
           color: Colors.black,
           borderRadius: BorderRadius.circular(24.r),
         ),
-        child: ListTile(
-          leading: Container(
-            padding: EdgeInsets.all(12.w),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.16),
-              shape: BoxShape.circle,
+        child: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(12.w),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(Icons.stars_rounded, color: Colors.amber, size: 32.sp),
             ),
-            child: Icon(Icons.stars_rounded, color: Colors.amber, size: 32.sp),
-          ),
-          title: Text('Gold Member', style: AppTextStyles.labelLg.copyWith(color: Colors.white)),
-          subtitle: Text('2,450 Points • 12 Orders', style: AppTextStyles.bodySm.copyWith(color: Colors.white70)),
-          trailing: const Icon(Icons.chevron_right_rounded, color: Colors.white),
+            SizedBox(width: 16.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Gold Member', style: AppTextStyles.labelLg.copyWith(color: Colors.white)),
+                  Text('2,450 Points • 12 Orders', style: AppTextStyles.bodySm.copyWith(color: Colors.white70)),
+                ],
+              ),
+            ),
+            const Icon(Icons.chevron_right_rounded, color: Colors.white),
+          ],
         ),
       ),
     );
@@ -111,10 +132,9 @@ class ProfileScreen extends StatelessWidget {
       children: [
         _buildMenuItem(isDark, Icons.person_outline_rounded, 'Edit Profile', () => context.push(AppRouter.editProfile)),
         _buildMenuItem(isDark, Icons.shopping_bag_outlined, 'My Orders', () => context.push(AppRouter.myOrders)),
-        _buildMenuItem(isDark, Icons.history_rounded, 'Orders History', () => context.push(AppRouter.ordersHistory)),
         _buildMenuItem(isDark, Icons.location_on_outlined, 'Shipping Addresses', () => context.push(AppRouter.addresses)),
         _buildMenuItem(isDark, Icons.payment_outlined, 'Payment Methods', () => context.push(AppRouter.payments)),
-        _buildMenuItem(isDark, Icons.notifications_none_rounded, 'Notifications', () => context.push(AppRouter.notificationsSimple)),
+        _buildMenuItem(isDark, Icons.notifications_none_rounded, 'Notifications', () => context.push(AppRouter.notifications)),
         _buildMenuItem(isDark, Icons.help_outline_rounded, 'Help Center', () => context.push(AppRouter.helpCenter)),
       ],
     );
@@ -125,7 +145,7 @@ class ProfileScreen extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 8.h),
       child: ListTile(
         onTap: onTap,
-        contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
         leading: Container(
           padding: EdgeInsets.all(10.w),
           decoration: BoxDecoration(

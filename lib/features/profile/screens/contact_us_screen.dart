@@ -32,7 +32,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
   Widget _buildForm(bool isDark) {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(AppSpacing.md.w),
+      padding: EdgeInsets.all(AppSpacing.lg.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

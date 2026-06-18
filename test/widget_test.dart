@@ -8,14 +8,21 @@ void main() {
     HttpOverrides.global = null;
   });
 
-  testWidgets('Welcome screen smoke test', (WidgetTester tester) async {
+  testWidgets('Splash screen smoke test', (WidgetTester tester) async {
     tester.view.physicalSize = const Size(1080, 1920);
     tester.view.devicePixelRatio = 1.0;
 
     await tester.pumpWidget(const FurnitureApp());
+
+    // We expect the splash screen text to be there.
+    expect(find.text('MODERN'), findsOneWidget);
+    expect(find.text('FURNITURE'), findsOneWidget);
+
+    // Pump for timer (3 seconds)
+    await tester.pump(const Duration(seconds: 4));
     await tester.pumpAndSettle();
 
-    // We expect the image to fail in test environment, but the text should be there.
+    // Now we should be on the welcome screen.
     expect(find.text('Unique Furniture with\nGood Quality'), findsOneWidget);
 
     addTearDown(tester.view.resetPhysicalSize);

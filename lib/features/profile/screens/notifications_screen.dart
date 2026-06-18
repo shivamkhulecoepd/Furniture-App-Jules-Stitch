@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../shared/widgets/app_app_bar.dart';
+import '../../../shared/widgets/app_bottom_nav.dart';
 import '../../../theme/app_text_styles.dart';
 import '../../../theme/app_colors.dart';
 
@@ -19,111 +20,141 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark
-          ? AppColors.backgroundDark
-          : AppColors.backgroundLight,
-      // appBar: const AppAppBar(
-      //   title: 'Modern Furniture',
-      //   showCart: true,
-      //   centerTitle: false,
-      //   showBackButton: true,
-      // ),
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: isDark
-            ? AppColors.backgroundDark
-            : AppColors.backgroundLight,
-            surfaceTintColor: Colors.transparent,
-        title: Text(
-          'Notifications',
-          style: AppTextStyles.h3.copyWith(
-            color: isDark ? Colors.white : Colors.black,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              setState(() {
-                _allRead = true;
-              });
-            },
-            child: Text(
-              'All read',
-              style: AppTextStyles.labelMd.copyWith(
-                color: isDark ? Colors.white : Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 14.sp,
-              ),
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      appBar: const AppAppBar(
+        title: 'Modern Furniture',
+        showCart: true,
+        centerTitle: false,
+        showBackButton: true,
+      ),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Notifications',
+                            style: AppTextStyles.h1.copyWith(
+                              fontSize: 32.sp,
+                              height: 1.2,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          Text(
+                            'Stay updated with your latest\nactivity',
+                            style: AppTextStyles.bodyMd.copyWith(
+                              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                              fontSize: 16.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 8.h),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _allRead = true;
+                          });
+                        },
+                        child: Text(
+                          'Mark all as\nread',
+                          textAlign: TextAlign.right,
+                          style: AppTextStyles.labelMd.copyWith(
+                            color: isDark ? Colors.white : Colors.black,
+                            fontWeight: FontWeight.bold,
+                            height: 1.2,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 32.h),
+                _buildSectionHeader('ORDER STATUS'),
+                SizedBox(height: 12.h),
+                _buildNotificationGroup(
+                  isDark,
+                  [
+                    NotificationItem(
+                      icon: Icons.local_shipping_outlined,
+                      iconColor: isDark ? Colors.white : Colors.black,
+                      iconBg: isDark ? Colors.white10 : const Color(0xFFF0F0F0),
+                      title: 'Order Out for Delivery',
+                      time: '2m ago',
+                      message: 'Your Nordic Oak Coffee Table is on the way! Our courier is expected to...',
+                      isUnread: !_allRead,
+                    ),
+                    NotificationItem(
+                      icon: Icons.inventory_2_outlined,
+                      iconColor: isDark ? Colors.white : Colors.black,
+                      iconBg: isDark ? Colors.white10 : const Color(0xFFF0F0F0),
+                      title: 'Payment Confirmed',
+                      time: '4h ago',
+                      message: 'Payment for Order #MF-8829 was successful. We are now preparing...',
+                      isUnread: false,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 32.h),
+                _buildSectionHeader('PROMOTIONS'),
+                SizedBox(height: 12.h),
+                _buildNotificationGroup(
+                  isDark,
+                  [
+                    NotificationItem(
+                      icon: Icons.local_offer_outlined,
+                      iconColor: isDark ? Colors.white : Colors.black,
+                      iconBg: isDark ? Colors.white10 : const Color(0xFFF0F0F0),
+                      title: 'Flash Sale: 20% Off',
+                      time: '6h ago',
+                      message: 'Exclusive weekend offer! Get 20% off all Minimalist Collection seating...',
+                      isUnread: !_allRead,
+                      bannerImage: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=1000&auto=format&fit=crop',
+                      bannerText: 'Shop the Modern Collection',
+                    ),
+                  ],
+                ),
+                SizedBox(height: 32.h),
+                _buildSectionHeader('ACCOUNT SECURITY'),
+                SizedBox(height: 12.h),
+                _buildNotificationGroup(
+                  isDark,
+                  [
+                    NotificationItem(
+                      icon: Icons.shield_outlined,
+                      iconColor: const Color(0xFFD32F2F),
+                      iconBg: const Color(0xFFFFEBEE),
+                      title: 'New Login Detected',
+                      time: '1d ago',
+                      message: 'A new login was detected on a Chrome browser from London, UK. I...',
+                      isUnread: !_allRead,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 120.h), // Space for bottom navigation
+              ],
             ),
           ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: const AppBottomNav(currentIndex: 2),
+          ),
         ],
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionHeader('ORDER STATUS'),
-            SizedBox(height: 12.h),
-            _buildNotificationGroup(isDark, [
-              NotificationItem(
-                icon: Icons.local_shipping_outlined,
-                iconColor: isDark ? Colors.white : Colors.black,
-                iconBg: isDark ? Colors.white10 : const Color(0xFFF0F0F0),
-                title: 'Order Out for Delivery',
-                time: '2m ago',
-                message:
-                    'Your Nordic Oak Coffee Table is on the way! Our courier is expected to...',
-                isUnread: !_allRead,
-              ),
-              NotificationItem(
-                icon: Icons.inventory_2_outlined,
-                iconColor: isDark ? Colors.white : Colors.black,
-                iconBg: isDark ? Colors.white10 : const Color(0xFFF0F0F0),
-                title: 'Payment Confirmed',
-                time: '4h ago',
-                message:
-                    'Payment for Order #MF-8829 was successful. We are now preparing...',
-                isUnread: false,
-              ),
-            ]),
-            SizedBox(height: 32.h),
-            _buildSectionHeader('PROMOTIONS'),
-            SizedBox(height: 12.h),
-            _buildNotificationGroup(isDark, [
-              NotificationItem(
-                icon: Icons.local_offer_outlined,
-                iconColor: isDark ? Colors.white : Colors.black,
-                iconBg: isDark ? Colors.white10 : const Color(0xFFF0F0F0),
-                title: 'Flash Sale: 20% Off',
-                time: '6h ago',
-                message:
-                    'Exclusive weekend offer! Get 20% off all Minimalist Collection seating...',
-                isUnread: !_allRead,
-                bannerImage:
-                    'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=1000&auto=format&fit=crop',
-                bannerText: 'Shop the Modern Collection',
-              ),
-            ]),
-            SizedBox(height: 32.h),
-            _buildSectionHeader('ACCOUNT SECURITY'),
-            SizedBox(height: 12.h),
-            _buildNotificationGroup(isDark, [
-              NotificationItem(
-                icon: Icons.shield_outlined,
-                iconColor: const Color(0xFFD32F2F),
-                iconBg: const Color(0xFFFFEBEE),
-                title: 'New Login Detected',
-                time: '1d ago',
-                message:
-                    'A new login was detected on a Chrome browser from London, UK. I...',
-                isUnread: !_allRead,
-              ),
-            ]),
-            SizedBox(height: 24.h),
-          ],
-        ),
       ),
     );
   }
@@ -186,7 +217,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   color: item.iconBg,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(item.icon, color: item.iconColor, size: 24.sp),
+                child: Icon(
+                  item.icon,
+                  color: item.iconColor,
+                  size: 24.sp,
+                ),
               ),
               SizedBox(width: 16.w),
               Expanded(

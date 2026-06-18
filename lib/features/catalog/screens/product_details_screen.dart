@@ -49,7 +49,7 @@ class ProductDetailsScreen extends StatelessWidget {
           children: [
             _buildHeroImage(),
             Padding(
-              padding: EdgeInsets.all(AppSpacing.md.w),
+              padding: EdgeInsets.all(AppSpacing.lg.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -181,7 +181,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget _buildBottomBar(BuildContext context, bool isDark) {
     return Container(
-      padding: EdgeInsets.all(AppSpacing.md.w),
+      padding: EdgeInsets.all(AppSpacing.lg.w),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(32.r)),
@@ -197,8 +197,7 @@ class ProductDetailsScreen extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              // padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-              padding: EdgeInsets.all(AppSpacing.sm.w),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey[200]!),
                 borderRadius: BorderRadius.circular(16.r),

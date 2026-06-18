@@ -13,42 +13,26 @@ class HelpCenterScreen extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark
-          ? AppColors.backgroundDark
-          : AppColors.backgroundLight,
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: const AppAppBar(title: 'Help Center'),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: AppSpacing.md.w),
+        padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 16.h),
+            SizedBox(height: 24.h),
+            _buildSearchBar(isDark),
+            SizedBox(height: 32.h),
             Text('Quick Support', style: AppTextStyles.h3),
             SizedBox(height: 16.h),
             _buildSupportGrid(isDark),
             SizedBox(height: 32.h),
             Text('Frequently Asked Questions', style: AppTextStyles.h3),
             SizedBox(height: 16.h),
-            _buildFaqItem(
-              isDark,
-              'How do I track my order?',
-              'You can track your order by going to the My Orders section in your profile and clicking on the Track Order button.',
-            ),
-            _buildFaqItem(
-              isDark,
-              'What is the return policy?',
-              'We offer a 30-day return policy for most items. Items must be in their original condition and packaging.',
-            ),
-            _buildFaqItem(
-              isDark,
-              'Do you ship internationally?',
-              'Yes, we ship to over 50 countries worldwide. Shipping fees and delivery times vary by location.',
-            ),
-            _buildFaqItem(
-              isDark,
-              'How can I change my delivery address?',
-              'You can change your delivery address before the order is shipped. Contact our support team immediately.',
-            ),
+            _buildFaqItem(isDark, 'How do I track my order?', 'You can track your order by going to the My Orders section in your profile and clicking on the Track Order button.'),
+            _buildFaqItem(isDark, 'What is the return policy?', 'We offer a 30-day return policy for most items. Items must be in their original condition and packaging.'),
+            _buildFaqItem(isDark, 'Do you ship internationally?', 'Yes, we ship to over 50 countries worldwide. Shipping fees and delivery times vary by location.'),
+            _buildFaqItem(isDark, 'How can I change my delivery address?', 'You can change your delivery address before the order is shipped. Contact our support team immediately.'),
             SizedBox(height: 40.h),
           ],
         ),
@@ -83,40 +67,15 @@ class HelpCenterScreen extends StatelessWidget {
       crossAxisSpacing: 16.w,
       childAspectRatio: 1.2,
       children: [
-        _buildSupportCard(
-          isDark,
-          'Live Chat',
-          Icons.chat_outlined,
-          Colors.blue,
-        ),
-        _buildSupportCard(
-          isDark,
-          'Email Support',
-          Icons.email_outlined,
-          Colors.orange,
-        ),
-        _buildSupportCard(
-          isDark,
-          'Phone Call',
-          Icons.phone_outlined,
-          Colors.green,
-        ),
-        _buildSupportCard(
-          isDark,
-          'Community',
-          Icons.groups_outlined,
-          Colors.purple,
-        ),
+        _buildSupportCard(isDark, 'Live Chat', Icons.chat_outlined, Colors.blue),
+        _buildSupportCard(isDark, 'Email Support', Icons.email_outlined, Colors.orange),
+        _buildSupportCard(isDark, 'Phone Call', Icons.phone_outlined, Colors.green),
+        _buildSupportCard(isDark, 'Community', Icons.groups_outlined, Colors.purple),
       ],
     );
   }
 
-  Widget _buildSupportCard(
-    bool isDark,
-    String title,
-    IconData icon,
-    Color color,
-  ) {
+  Widget _buildSupportCard(bool isDark, String title, IconData icon, Color color) {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
@@ -143,26 +102,14 @@ class HelpCenterScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: Colors.grey[200]!),
       ),
-      child: ExpansionTileTheme(
-        data: const ExpansionTileThemeData(
-          shape: Border(),
-          collapsedShape: Border(),
-        ),
-        child: ExpansionTile(
-          title: Text(question, style: AppTextStyles.labelMd),
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.h),
-              child: Text(
-                answer,
-                style: AppTextStyles.bodyMd.copyWith(
-                  color: Colors.grey[600],
-                  height: 1.5,
-                ),
-              ),
-            ),
-          ],
-        ),
+      child: ExpansionTile(
+        title: Text(question, style: AppTextStyles.labelMd),
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.h),
+            child: Text(answer, style: AppTextStyles.bodyMd.copyWith(color: Colors.grey[600], height: 1.5)),
+          ),
+        ],
       ),
     );
   }

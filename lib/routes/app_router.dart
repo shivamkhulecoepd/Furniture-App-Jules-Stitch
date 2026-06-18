@@ -1,6 +1,5 @@
-import 'package:furniture_app_jules_stitch/app.dart';
-import 'package:furniture_app_jules_stitch/features/profile/screens/orders_history_screen.dart';
 import 'package:go_router/go_router.dart';
+import '../features/auth/screens/splash_screen.dart';
 import '../features/auth/screens/welcome_screen.dart';
 import '../features/auth/screens/login_screen.dart';
 import '../features/auth/screens/register_screen.dart';
@@ -29,8 +28,8 @@ import '../features/profile/screens/contact_us_screen.dart';
 import '../features/profile/screens/privacy_policy_screen.dart';
 
 class AppRouter {
-  static const String welcome = '/';
-  static const String main = '/main';
+  static const String splash = '/splash';
+  static const String welcome = '/welcome';
   static const String login = '/login';
   static const String register = '/register';
   static const String forgotPassword = '/forgot-password';
@@ -50,10 +49,8 @@ class AppRouter {
   static const String editProfile = '/edit-profile';
   static const String settings = '/settings';
   static const String notifications = '/notifications';
-  static const String notificationsSimple = '/notifications-simple';
   static const String loyalty = '/loyalty';
   static const String myOrders = '/my-orders';
-  static const String ordersHistory = '/orders-history';
   static const String orderDetails = '/order-details/:id';
   static const String helpCenter = '/help-center';
   static const String contactUs = '/contact-us';
@@ -68,60 +65,20 @@ class AppRouter {
   static const String orderSuccess = success;
 
   static final GoRouter router = GoRouter(
-    initialLocation: main,
+    initialLocation: splash,
     routes: [
-      GoRoute(
-        path: main,
-        redirect: (context, state) => catalog,
-      ),
-      StatefulShellRoute.indexedStack(
-        builder: (context, state, navigationShell) {
-          return App(navigationShell: navigationShell);
-        },
-        branches: [
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: catalog,
-                builder: (context, state) => const FurnitureCatalogScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: search,
-                builder: (context, state) => const SearchScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: notifications,
-                builder: (context, state) => const NotificationsScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: profile,
-                builder: (context, state) => const ProfileScreen(),
-              ),
-            ],
-          ),
-        ],
-      ),
+      GoRoute(path: splash, builder: (context, state) => const SplashScreen()),
       GoRoute(path: welcome, builder: (context, state) => const WelcomeScreen()),
       GoRoute(path: login, builder: (context, state) => const LoginScreen()),
       GoRoute(path: register, builder: (context, state) => const RegisterScreen()),
       GoRoute(path: forgotPassword, builder: (context, state) => const ForgotPasswordScreen()),
       GoRoute(path: otp, builder: (context, state) => const OtpVerificationScreen()),
+      GoRoute(path: catalog, builder: (context, state) => const FurnitureCatalogScreen()),
       GoRoute(
         path: productDetails,
         builder: (context, state) => ProductDetailsScreen(productId: state.pathParameters['id'] ?? '1'),
       ),
+      GoRoute(path: search, builder: (context, state) => const SearchScreen()),
       GoRoute(
         path: category,
         builder: (context, state) => CategoryScreen(categoryName: state.pathParameters['name'] ?? 'Chairs'),
@@ -133,12 +90,12 @@ class AppRouter {
       GoRoute(path: trackOrder, builder: (context, state) => const TrackOrderScreen()),
       GoRoute(path: addresses, builder: (context, state) => const ShippingAddressesScreen()),
       GoRoute(path: payments, builder: (context, state) => const PaymentMethodsScreen()),
+      GoRoute(path: profile, builder: (context, state) => const ProfileScreen()),
       GoRoute(path: editProfile, builder: (context, state) => const EditProfileScreen()),
       GoRoute(path: settings, builder: (context, state) => const SettingsScreen()),
+      GoRoute(path: notifications, builder: (context, state) => const NotificationsScreen()),
       GoRoute(path: loyalty, builder: (context, state) => const LoyaltyRewardsScreen()),
       GoRoute(path: myOrders, builder: (context, state) => const MyOrdersScreen()),
-      GoRoute(path: ordersHistory, builder: (context, state) => const OrdersHistoryScreen()),
-      GoRoute(path: notificationsSimple, builder: (context, state) => const NotificationsScreen()),
       GoRoute(
         path: orderDetails,
         builder: (context, state) => OrderDetailsScreen(orderId: state.pathParameters['id'] ?? 'TRX-8829'),

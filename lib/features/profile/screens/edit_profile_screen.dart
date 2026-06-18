@@ -18,7 +18,7 @@ class EditProfileScreen extends StatelessWidget {
           padding: EdgeInsets.all(AppSpacing.containerPadding),
           child: Column(
             children: [
-              SizedBox(height: 16.h),
+              SizedBox(height: 24.h),
               Center(
                 child: Stack(
                   children: [

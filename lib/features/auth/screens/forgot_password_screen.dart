@@ -34,8 +34,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 hintText: 'Enter your email',
                 keyboardType: TextInputType.emailAddress,
               ),
-              SizedBox(height: 32.h),
-              // const Spacer(),
+              const Spacer(),
               AppButton(
                 text: 'Send Code',
                 onPressed: () => context.push(AppRouter.otpVerification),
